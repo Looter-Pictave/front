@@ -14,6 +14,32 @@
     />
 
     <title>Looter Pictave — Pop Culture &amp; Collections</title>
+
+    <!--
+      Anti-FOUC : applique le thème AVANT le rendu de la page pour éviter
+      un flash blanc/sombre au chargement. Cohérent avec la logique du
+      store theme (lp_theme dans localStorage + fallback prefers-color-scheme).
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('lp_theme');
+          var mode =
+            stored === 'light' || stored === 'dark' || stored === 'auto'
+              ? stored
+              : 'auto';
+          var theme =
+            mode === 'dark' ||
+            (mode === 'auto' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches)
+              ? 'dark'
+              : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          /* localStorage indisponible (mode privé), on laisse light par défaut */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

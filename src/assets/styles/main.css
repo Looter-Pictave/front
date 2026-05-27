@@ -42,23 +42,56 @@
   --radius-chip: 9999px;
 }
 
+/* ----------------------------------------------------------------------------
+ * Dark mode — override des tokens.
+ *
+ * Stratégie : on swap ink <-> paper/cream (l'encre devient claire, le papier
+ * devient sombre) + on inverse les opacités des textes secondaires.
+ * Comme TOUS les composants utilisent ces tokens (cf. refactor session 2),
+ * 95% de l'app passe en dark mode sans avoir à les modifier un par un.
+ *
+ * Cas spéciaux qui DOIVENT rester avec leur couleur de light mode :
+ *   - Fond jaune du header (var(--color-brand-yellow) reste #ffdd00)
+ *   - Fond noir du footer (patch ciblé dans AppFooter.vue)
+ *   - Cart button noir dans le header (patch ciblé dans AppHeader.vue)
+ *   - Les couleurs de stock (in/low/out) restent comme en light
+ * -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --color-brand-ink: #fff8d6;       /* "encre" devient cream */
+  --color-brand-paper: #1a1a18;     /* surface principale -> sombre */
+  --color-brand-cream: #252320;     /* surface alt -> dark elevated */
+
+  /* Textes secondaires sur fond sombre : opacités blanches */
+  --color-ink-muted: rgb(255 255 255 / 0.6);
+  --color-ink-soft: rgb(255 255 255 / 0.78);
+  --color-line: rgb(255 255 255 / 0.15);
+
+  /* Les ombres "stamp" doivent être claires sur fond sombre */
+  --shadow-stamp-sm: 2px 2px 0 0 #fff8d6;
+  --shadow-stamp: 4px 4px 0 0 #fff8d6;
+  --shadow-stamp-lg: 6px 6px 0 0 #fff8d6;
+}
+
 /* Base */
 html {
   background: var(--color-brand-paper);
   color: var(--color-brand-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  /* Transition douce quand on toggle le thème */
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 body {
   margin: 0;
   min-height: 100dvh;
+  background: var(--color-brand-paper);
 }
 
 /* Selection */
 ::selection {
   background: var(--color-brand-yellow);
-  color: var(--color-brand-ink);
+  color: #1d1d1b;
 }
 
 /* Petit utilitaire pour le drop-shadow jaune façon logo */

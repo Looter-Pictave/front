@@ -5,6 +5,7 @@ import { RouterLink, useRouter } from 'vue-router'
 
 import BrandLogo from '@/components/base/BrandLogo.vue'
 import BaseChip from '@/components/base/BaseChip.vue'
+import ThemeToggle from '@/components/base/ThemeToggle.vue'
 import { useCartStore } from '@/stores/cart'
 import { useUiStore } from '@/stores/ui'
 import { useAuthStore } from '@/stores/auth'
@@ -70,6 +71,9 @@ async function handleLogout() {
       </nav>
 
       <div class="header__actions">
+        <!-- Toggle thème : petit bouton lune/soleil, toujours visible -->
+        <ThemeToggle />
+
         <!-- Bouton Connexion si non authentifié -->
         <RouterLink
           v-if="!isAuthenticated"
@@ -413,5 +417,47 @@ async function handleLogout() {
   height: 1px;
   background: var(--color-line);
   margin: 0.3rem 0;
+}
+
+/* ===== Patch dark mode =====
+   Le header reste sur fond jaune brand peu importe le thème : il faut donc
+   FORCER les éléments qui utilisaient var(--color-brand-ink) à garder leur
+   noir d'origine (sinon les vars swappées rendent le texte invisible sur
+   le jaune). Le dropdown s'adapte tout seul, lui (fond paper -> sombre). */
+[data-theme="dark"] .header {
+  border-bottom-color: #1d1d1b;
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__name,
+[data-theme="dark"] .header__tagline,
+[data-theme="dark"] .header__link {
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__link:hover,
+[data-theme="dark"] .header__link.router-link-active {
+  border-bottom-color: #1d1d1b;
+}
+[data-theme="dark"] .header__login {
+  border-color: #1d1d1b;
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__login:hover {
+  background: #1d1d1b;
+  color: #ffdd00;
+}
+[data-theme="dark"] .header__cart {
+  background: #1d1d1b;
+  color: #ffffff;
+}
+[data-theme="dark"] .header__cart:hover {
+  background: #000;
+}
+[data-theme="dark"] .header__user-trigger {
+  background: #1d1d1b;
+  color: #ffdd00;
+}
+[data-theme="dark"] .header__user-avatar {
+  background: #ffdd00;
+  color: #1d1d1b;
 }
 </style>

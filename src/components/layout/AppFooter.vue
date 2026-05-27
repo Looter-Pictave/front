@@ -194,4 +194,31 @@ const year = new Date().getFullYear()
   margin: 0 0.4rem;
   opacity: 0.5;
 }
+
+/* ===== Patch dark mode =====
+   Le footer noir est un élément identitaire fort : il reste noir en dark
+   mode pour ne pas se confondre avec le fond de page (qui devient sombre
+   lui aussi). Sans ce patch, var(--color-brand-ink) swapperait en cream
+   et le footer perdrait son contraste signature. */
+[data-theme="dark"] .footer {
+  background: #1d1d1b;
+  color: #ffffff;
+  border-top: 2px solid #fff8d6;
+}
+[data-theme="dark"] .footer__list a,
+[data-theme="dark"] .footer__col a {
+  color: #ffffff;
+}
+[data-theme="dark"] .footer__list a:hover,
+[data-theme="dark"] .footer__col a:hover {
+  color: #ffdd00;
+}
+[data-theme="dark"] .footer__socials a {
+  border-color: #ffdd00;
+  color: #ffdd00;
+}
+[data-theme="dark"] .footer__socials a:hover {
+  background: #ffdd00;
+  color: #1d1d1b;
+}
 </style>
