@@ -101,7 +101,7 @@ const { isCartOpen } = storeToRefs(ui)
 .drawer__empty {
   padding: 3rem 0;
   text-align: center;
-  color: rgb(0 0 0 / 0.65);
+  color: var(--color-ink-soft);
 }
 .drawer__empty-sub {
   font-size: 0.85rem;

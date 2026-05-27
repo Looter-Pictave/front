@@ -1,46 +1,68 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+/**
+ * Eager imports volontaires (pas de lazy `() => import(...)`).
+ *
+ * Pourquoi : le combo `<Transition mode="out-in">` (App.vue) + composants
+ * lazy crée une race condition au premier passage sur une route — le temps
+ * que le chunk arrive du serveur, l'ancien composant est déjà sorti et le
+ * nouveau n'est pas encore là → page blanche jusqu'au F5 (le chunk est alors
+ * en cache).
+ *
+ * Avec 7 vues légères, le coût en taille de bundle est négligeable et on
+ * gagne un comportement déterministe. Si le projet grossit et qu'on veut
+ * vraiment du code-splitting, il faudra wrapper `<RouterView>` dans
+ * `<Suspense>` avec un fallback.
+ */
+import HomeView from '@/views/HomeView.vue'
+import CatalogView from '@/views/CatalogView.vue'
+import ProductView from '@/views/ProductView.vue'
+import CartView from '@/views/CartView.vue'
+import AboutView from '@/views/AboutView.vue'
+import ContactView from '@/views/ContactView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
+
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/HomeView.vue'),
+    component: HomeView,
     meta: { title: 'Accueil' },
   },
   {
     path: '/catalogue',
     name: 'catalog',
-    component: () => import('@/views/CatalogView.vue'),
+    component: CatalogView,
     meta: { title: 'Catalogue' },
   },
   {
     path: '/produit/:slug',
     name: 'product',
-    component: () => import('@/views/ProductView.vue'),
+    component: ProductView,
     meta: { title: 'Produit' },
   },
   {
     path: '/panier',
     name: 'cart',
-    component: () => import('@/views/CartView.vue'),
+    component: CartView,
     meta: { title: 'Panier' },
   },
   {
     path: '/a-propos',
     name: 'about',
-    component: () => import('@/views/AboutView.vue'),
+    component: AboutView,
     meta: { title: 'La boutique' },
   },
   {
     path: '/contact',
     name: 'contact',
-    component: () => import('@/views/ContactView.vue'),
+    component: ContactView,
     meta: { title: 'Contact' },
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
-    component: () => import('@/views/NotFoundView.vue'),
+    component: NotFoundView,
     meta: { title: 'Page introuvable' },
   },
 ]

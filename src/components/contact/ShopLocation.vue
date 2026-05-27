@@ -1,34 +1,17 @@
 <script setup>
 import BaseButton from '@/components/base/BaseButton.vue'
+import { SHOP, MAPS_EMBED_URL, MAPS_DIRECTIONS_URL } from '@/config/shop'
 
 /**
  * Carte de localisation de la boutique : bloc info (adresse, horaires, contact,
- * bouton "Itinéraire") + carte Google Maps (iframe embed simple, sans clé API).
+ * bouton "Itinéraire") + carte Google Maps (iframe embed sans clé API).
  *
- * ⚠️ Toutes les coordonnées sont centralisées en haut du composant.
- *    Modifie ici si l'adresse, les horaires ou l'email changent.
+ * Toutes les données viennent de @/config/shop — c'est la source unique de
+ * vérité pour les coordonnées Looter Pictave (utilisée aussi par ContactView,
+ * et plus tard par le footer + structured data SEO).
  *
- * ⚠️ RGPD : l'iframe Google Maps charge des cookies tiers Google dès l'affichage.
- *    Avant la mise en prod, soit on passe à un pattern click-to-load,
- *    soit on ajoute un bandeau de consentement.
+ * ⚠️ RGPD : voir note dans @/config/shop pour le rappel cookies Google Maps.
  */
-const ADDRESS = {
-  street: '19 rue de la Regratterie',
-  city: '86000 Poitiers',
-}
-
-const HOURS = [
-  { days: 'Lundi – Samedi', slots: ['10h30 – 13h30', '14h30 – 19h30'] },
-  { days: 'Dimanche', slots: ['Fermé'] },
-]
-
-const EMAIL = 'contact@looter-pictave.fr'
-
-// Google Maps : iframe d'embed simple (pas besoin de clé API)
-// + lien d'itinéraire qui s'ouvre dans l'app Maps de l'utilisateur
-const MAPS_QUERY = encodeURIComponent(`${ADDRESS.street} ${ADDRESS.city}`)
-const MAPS_EMBED = `https://maps.google.com/maps?q=${MAPS_QUERY}&hl=fr&z=16&output=embed`
-const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MAPS_QUERY}`
 </script>
 
 <template>
@@ -37,15 +20,15 @@ const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MA
       <div class="shop-location__block">
         <span class="shop-location__label">Adresse</span>
         <p class="shop-location__address">
-          {{ ADDRESS.street }}<br />
-          {{ ADDRESS.city }}
+          {{ SHOP.address.street }}<br />
+          {{ SHOP.address.postalCode }} {{ SHOP.address.city }}
         </p>
       </div>
 
       <div class="shop-location__block">
         <span class="shop-location__label">Horaires</span>
         <ul class="shop-location__hours">
-          <li v-for="h in HOURS" :key="h.days" class="shop-location__hours-row">
+          <li v-for="h in SHOP.hours" :key="h.days" class="shop-location__hours-row">
             <span class="shop-location__hours-days">{{ h.days }}</span>
             <span class="shop-location__hours-slots">
               <span v-for="s in h.slots" :key="s">{{ s }}</span>
@@ -56,11 +39,13 @@ const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MA
 
       <div class="shop-location__block">
         <span class="shop-location__label">Contact</span>
-        <a :href="`mailto:${EMAIL}`" class="shop-location__email">{{ EMAIL }}</a>
+        <a :href="`mailto:${SHOP.contact.email}`" class="shop-location__email">
+          {{ SHOP.contact.email }}
+        </a>
       </div>
 
       <BaseButton
-        :href="MAPS_DIRECTIONS"
+        :href="MAPS_DIRECTIONS_URL"
         target="_blank"
         rel="noopener noreferrer"
         class="shop-location__cta"
@@ -71,11 +56,11 @@ const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MA
 
     <div class="shop-location__map">
       <iframe
-        :src="MAPS_EMBED"
+        :src="MAPS_EMBED_URL"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         allowfullscreen
-        title="Carte Google Maps de la boutique Looter Pictave à Poitiers"
+        :title="`Carte Google Maps de la boutique ${SHOP.name} à ${SHOP.address.city}`"
       ></iframe>
     </div>
   </section>
@@ -89,7 +74,7 @@ const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MA
   border: 2px solid var(--color-brand-ink);
   border-radius: 0.8rem;
   overflow: hidden;
-  box-shadow: 6px 6px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp-lg);
   text-align: left;
 }
 @media (min-width: 760px) {
@@ -114,7 +99,7 @@ const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MA
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 700;
-  color: rgb(0 0 0 / 0.5);
+  color: var(--color-ink-muted);
 }
 .shop-location__address {
   margin: 0;
@@ -139,7 +124,7 @@ const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MA
 }
 .shop-location__hours-days {
   font-weight: 600;
-  color: rgb(0 0 0 / 0.65);
+  color: var(--color-ink-soft);
 }
 .shop-location__hours-slots {
   display: flex;

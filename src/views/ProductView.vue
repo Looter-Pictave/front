@@ -121,7 +121,7 @@ function addToCart() {
 }
 .page__breadcrumb {
   font-size: 0.8rem;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   margin-bottom: 1.5rem;
   display: flex;
   gap: 0.4rem;
@@ -156,7 +156,7 @@ function addToCart() {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
 }
 .product__name {
   margin: 0;
@@ -183,8 +183,8 @@ function addToCart() {
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 0.6rem 1rem;
   padding: 1rem 0;
-  border-top: 2px dashed rgb(0 0 0 / 0.15);
-  border-bottom: 2px dashed rgb(0 0 0 / 0.15);
+  border-top: 2px dashed var(--color-line);
+  border-bottom: 2px dashed var(--color-line);
   margin-top: 1rem;
 }
 .product__meta div {
@@ -196,7 +196,7 @@ function addToCart() {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgb(0 0 0 / 0.5);
+  color: var(--color-ink-muted);
   font-weight: 700;
 }
 .product__meta dd {

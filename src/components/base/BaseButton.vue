@@ -81,25 +81,25 @@ const isNative = computed(() => tag.value === 'button')
 .base-btn--primary {
   background: var(--color-brand-yellow);
   color: var(--color-brand-ink);
-  box-shadow: 4px 4px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp);
 }
 .base-btn--primary:hover:not(:disabled):not(.base-btn--disabled) {
   background: var(--color-brand-yellow-dark);
 }
 .base-btn--primary:active:not(:disabled):not(.base-btn--disabled) {
-  box-shadow: 2px 2px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp-sm);
 }
 
 .base-btn--secondary {
   background: var(--color-brand-ink);
   color: var(--color-brand-paper);
-  box-shadow: 4px 4px 0 0 var(--color-brand-yellow);
+  box-shadow: var(--shadow-stamp-yellow);
 }
 .base-btn--secondary:hover:not(:disabled):not(.base-btn--disabled) {
   background: #000;
 }
 .base-btn--secondary:active:not(:disabled):not(.base-btn--disabled) {
-  box-shadow: 2px 2px 0 0 var(--color-brand-yellow);
+  box-shadow: var(--shadow-stamp-yellow-sm);
 }
 
 .base-btn--ghost {
@@ -108,6 +108,7 @@ const isNative = computed(() => tag.value === 'button')
   box-shadow: none;
 }
 .base-btn--ghost:hover:not(:disabled):not(.base-btn--disabled) {
+  /* Hover bg trop spécifique pour mériter un token (1 seul usage). */
   background: rgb(0 0 0 / 0.06);
 }
 </style>

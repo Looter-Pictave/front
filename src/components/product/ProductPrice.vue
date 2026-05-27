@@ -47,7 +47,7 @@ const discount = computed(() => {
 }
 .price__old {
   text-decoration: line-through;
-  color: rgb(0 0 0 / 0.5);
+  color: var(--color-ink-muted);
   font-size: 0.9em;
 }
 .price__discount {

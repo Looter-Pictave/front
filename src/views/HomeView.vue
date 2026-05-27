@@ -14,7 +14,11 @@ const { featured, categories } = storeToRefs(catalog)
 </script>
 
 <template>
-  <section class="hero">
+  <!-- Root unique obligatoire : <Transition> dans App.vue n'anime que des
+       composants à un seul élément racine. Sans ce wrapper, on a un warning
+       Vue + un bug de page blanche au premier passage sur la route. -->
+  <div class="home">
+    <section class="hero">
     <span class="hero__sticker hero__sticker--tr" aria-hidden="true">
       70 m²<br />de pop culture
     </span>
@@ -80,6 +84,7 @@ const { featured, categories } = storeToRefs(catalog)
     </div>
     <ShopLocation class="pitch__location" />
   </section>
+  </div>
 </template>
 
 <style scoped>
@@ -201,7 +206,7 @@ const { featured, categories } = storeToRefs(catalog)
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   font-weight: 700;
 }
 .section__link {
@@ -245,7 +250,7 @@ const { featured, categories } = storeToRefs(catalog)
 .category:hover {
   background: var(--color-brand-yellow);
   transform: translate(-3px, -3px);
-  box-shadow: 6px 6px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp-lg);
 }
 .category__icon {
   font-size: 2.6rem;

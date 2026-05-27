@@ -6,6 +6,7 @@
  *  typo display chunky (Bungee) + sans-serif moderne (Inter).
  * -------------------------------------------------------------------------- */
 @theme {
+  /* ===== Palette ===== */
   --color-brand-yellow: #ffdd00;
   --color-brand-yellow-dark: #f5c500;
   --color-brand-ink: #1d1d1b;
@@ -17,12 +18,27 @@
   --color-stock-low: #ef6c00;
   --color-stock-out: #c62828;
 
+  /* Textes secondaires sur fond clair — 3 niveaux d'opacité noir.
+     On harmonise les valeurs proches (0.5/0.55/0.6 → muted, 0.1/0.15 → line). */
+  --color-ink-muted: rgb(0 0 0 / 0.55);
+  --color-ink-soft: rgb(0 0 0 / 0.65);
+  --color-line: rgb(0 0 0 / 0.15);
+
+  /* ===== Typo ===== */
   --font-display: "Bungee", "Impact", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 
-  --shadow-stamp: 4px 4px 0 0 var(--color-brand-yellow);
-  --shadow-stamp-ink: 4px 4px 0 0 var(--color-brand-ink);
+  /* ===== Stamps (ombres décalées signature DA) ===== */
+  --shadow-stamp-sm: 2px 2px 0 0 var(--color-brand-ink);
+  --shadow-stamp: 4px 4px 0 0 var(--color-brand-ink);
+  --shadow-stamp-lg: 6px 6px 0 0 var(--color-brand-ink);
+  --shadow-stamp-yellow: 4px 4px 0 0 var(--color-brand-yellow);
+  --shadow-stamp-yellow-sm: 2px 2px 0 0 var(--color-brand-yellow);
 
+  /* ===== Radii ===== */
+  --radius-sm: 0.4rem;
+  --radius-md: 0.6rem;
+  --radius-lg: 0.8rem;
   --radius-chip: 9999px;
 }
 

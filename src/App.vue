@@ -4,21 +4,14 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 <template>
   <DefaultLayout>
-    <RouterView v-slot="{ Component }">
-      <Transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </Transition>
-    </RouterView>
+    <!--
+      Pas de <Transition mode="out-in"> ici, volontairement.
+      Raison : la combo Transition + RouterView + composants à plusieurs root
+      nodes (ou même un seul) crée régulièrement des bugs de page blanche au
+      premier passage sur une route. Si on veut réintroduire un effet de
+      transition, il faudra le wrapper dans <Suspense> avec un fallback et
+      garantir qu'aucune vue n'a de fragment racine.
+    -->
+    <RouterView />
   </DefaultLayout>
 </template>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.18s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

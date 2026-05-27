@@ -105,7 +105,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
   flex-direction: column;
   gap: 0.8rem;
   align-items: flex-start;
-  box-shadow: 4px 4px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp);
 }
 .card h2 {
   font-family: var(--font-display);

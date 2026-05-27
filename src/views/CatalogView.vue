@@ -100,7 +100,7 @@ function reset() {
 .page__count {
   margin: 0;
   font-weight: 700;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
 }
 .page__layout {
   display: grid;

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import { SHOP } from '@/config/shop'
 
 const form = ref({ name: '', email: '', message: '' })
 const sent = ref(false)
@@ -19,28 +20,30 @@ function submit() {
       <section class="info">
         <h2>La boutique</h2>
         <address>
-          Looter Pictave<br />
-          19 rue de la Regratterie<br />
-          86000 Poitiers
+          {{ SHOP.name }}<br />
+          {{ SHOP.address.street }}<br />
+          {{ SHOP.address.postalCode }} {{ SHOP.address.city }}
         </address>
 
         <h3>Horaires</h3>
         <ul class="hours">
-          <li><span>Lundi</span><span>Fermé</span></li>
-          <li><span>Mardi - Samedi</span><span>10h30 - 13h30 / 14h - 19h</span></li>
-          <li><span>Dimanche</span><span>Fermé</span></li>
+          <li v-for="h in SHOP.hours" :key="h.days">
+            <span>{{ h.days }}</span>
+            <span>{{ h.slots.join(' / ') }}</span>
+          </li>
         </ul>
 
         <h3>Nous joindre</h3>
         <p>
-          ✉️ <a href="mailto:contact@looter-pictave.fr">contact@looter-pictave.fr</a>
+          ✉️
+          <a :href="`mailto:${SHOP.contact.email}`">{{ SHOP.contact.email }}</a>
         </p>
 
         <h3>Réseaux</h3>
         <p>
-          <a href="https://www.facebook.com/people/Looter-Pictave/61578506021279/" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a :href="SHOP.social.facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
           ·
-          <a href="https://www.instagram.com/looterpictave/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a :href="SHOP.social.instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
         </p>
       </section>
 
@@ -129,14 +132,14 @@ function submit() {
   justify-content: space-between;
   font-size: 0.95rem;
   padding: 0.2rem 0;
-  border-bottom: 1px dashed rgb(0 0 0 / 0.15);
+  border-bottom: 1px dashed var(--color-line);
 }
 .form-wrap {
   background: var(--color-brand-paper);
   border: 2px solid var(--color-brand-ink);
   border-radius: 0.8rem;
   padding: 1.8rem;
-  box-shadow: 4px 4px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp);
 }
 .form-wrap h2 {
   font-family: var(--font-display);
@@ -169,7 +172,7 @@ function submit() {
   margin: 0;
   font-size: 0.75rem;
   font-style: italic;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   text-align: center;
 }
 .form-sent {

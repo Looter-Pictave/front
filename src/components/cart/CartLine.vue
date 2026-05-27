@@ -51,7 +51,7 @@ function remove() {
   grid-template-columns: 80px 1fr auto;
   gap: 1rem;
   padding: 1rem 0;
-  border-bottom: 1px solid rgb(0 0 0 / 0.1);
+  border-bottom: 1px solid var(--color-line);
   align-items: start;
 }
 .line__image {
@@ -79,7 +79,7 @@ function remove() {
 }
 .line__sku {
   font-size: 0.7rem;
-  color: rgb(0 0 0 / 0.5);
+  color: var(--color-ink-muted);
   margin: 0 0 0.6rem;
   font-family: monospace;
 }
@@ -115,7 +115,7 @@ function remove() {
 .line__remove {
   background: none;
   border: none;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   cursor: pointer;
   font-size: 0.8rem;
   text-decoration: underline;

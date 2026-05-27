@@ -62,6 +62,6 @@ const { lines, isEmpty } = storeToRefs(cart)
   border: 2px solid var(--color-brand-ink);
   border-radius: 0.8rem;
   padding: 0.5rem 1.4rem;
-  box-shadow: 4px 4px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp);
 }
 </style>

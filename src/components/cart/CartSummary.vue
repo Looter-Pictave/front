@@ -42,7 +42,7 @@ const { subtotal, count } = storeToRefs(cart)
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: 4px 4px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp);
 }
 .summary__title {
   margin: 0;
@@ -55,7 +55,7 @@ const { subtotal, count } = storeToRefs(cart)
   font-size: 0.95rem;
 }
 .summary__row--muted {
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   font-size: 0.85rem;
 }
 .summary__total {
@@ -68,11 +68,11 @@ const { subtotal, count } = storeToRefs(cart)
 .summary__note {
   margin: 0;
   font-size: 0.75rem;
-  color: rgb(0 0 0 / 0.5);
+  color: var(--color-ink-muted);
   font-style: italic;
 }
 hr {
   border: none;
-  border-top: 2px dashed rgb(0 0 0 / 0.15);
+  border-top: 2px dashed var(--color-line);
 }
 </style>

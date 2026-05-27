@@ -40,6 +40,6 @@ defineProps({
 .product-grid__empty {
   text-align: center;
   padding: 4rem 1rem;
-  color: rgb(0 0 0 / 0.6);
+  color: var(--color-ink-muted);
 }
 </style>

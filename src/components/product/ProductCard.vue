@@ -49,11 +49,11 @@ const isCollector = computed(() => props.product.condition === 'collector')
   border-radius: 0.6rem;
   overflow: hidden;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 4px 4px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp);
 }
 .card:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 var(--color-brand-ink);
+  box-shadow: var(--shadow-stamp-lg);
 }
 .card__media {
   position: relative;
@@ -87,7 +87,7 @@ const isCollector = computed(() => props.product.condition === 'collector')
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   font-weight: 700;
 }
 .card__name {

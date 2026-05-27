@@ -133,7 +133,7 @@ function update(patch) {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: rgb(0 0 0 / 0.55);
+  color: var(--color-ink-muted);
   cursor: pointer;
   text-decoration: underline;
 }
