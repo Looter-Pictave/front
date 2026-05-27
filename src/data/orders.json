@@ -1,0 +1,93 @@
+[
+  {
+    "id": "ord-2026-0042",
+    "userId": "user-001",
+    "number": "LP-2026-0042",
+    "createdAt": "2026-04-12",
+    "status": "delivered",
+    "deliveredAt": "2026-04-17",
+    "items": [
+      {
+        "productId": "lp-0001",
+        "slug": "shfiguarts-goku-super-saiyan",
+        "name": "S.H. Figuarts Son Goku Super Saiyan",
+        "image": "https://placehold.co/600x600/1d1d1b/ffdd00?text=Goku+SSJ",
+        "quantity": 1,
+        "unitPrice": { "amount": 8990, "currency": "EUR" }
+      },
+      {
+        "productId": "lp-0012",
+        "slug": "mug-harry-potter-gryffondor",
+        "name": "Mug Harry Potter — Maison Gryffondor",
+        "image": "https://placehold.co/600x600/740001/ffd700?text=Mug+HP",
+        "quantity": 2,
+        "unitPrice": { "amount": 1190, "currency": "EUR" }
+      }
+    ],
+    "subtotal": { "amount": 11370, "currency": "EUR" },
+    "shipping": { "amount": 590, "currency": "EUR", "method": "Colissimo Domicile" },
+    "total": { "amount": 11960, "currency": "EUR" },
+    "shippingAddressId": "addr-001",
+    "trackingNumber": "8L00012345678FR"
+  },
+  {
+    "id": "ord-2026-0051",
+    "userId": "user-001",
+    "number": "LP-2026-0051",
+    "createdAt": "2026-05-19",
+    "status": "shipped",
+    "shippedAt": "2026-05-21",
+    "items": [
+      {
+        "productId": "lp-0006",
+        "slug": "maquette-gundam-wing-mg",
+        "name": "Maquette Master Grade Wing Gundam 1/100",
+        "image": "https://placehold.co/600x600/1d1d1b/ffdd00?text=Wing+Gundam",
+        "quantity": 1,
+        "unitPrice": { "amount": 4990, "currency": "EUR" }
+      }
+    ],
+    "subtotal": { "amount": 4990, "currency": "EUR" },
+    "shipping": { "amount": 590, "currency": "EUR", "method": "Colissimo Domicile" },
+    "total": { "amount": 5580, "currency": "EUR" },
+    "shippingAddressId": "addr-001",
+    "trackingNumber": "8L00098765432FR"
+  },
+  {
+    "id": "ord-2026-0058",
+    "userId": "user-001",
+    "number": "LP-2026-0058",
+    "createdAt": "2026-05-26",
+    "status": "preparing",
+    "items": [
+      {
+        "productId": "lp-0002",
+        "slug": "funko-pop-naruto-hokage",
+        "name": "Funko POP! Naruto Hokage #1234",
+        "image": "https://placehold.co/600x600/ffdd00/1d1d1b?text=POP+Hokage",
+        "quantity": 1,
+        "unitPrice": { "amount": 1490, "currency": "EUR" }
+      },
+      {
+        "productId": "lp-0010",
+        "slug": "funko-pop-spider-man",
+        "name": "Funko POP! Marvel Spider-Man",
+        "image": "https://placehold.co/600x600/c62828/ffffff?text=Spidey",
+        "quantity": 1,
+        "unitPrice": { "amount": 1690, "currency": "EUR" }
+      },
+      {
+        "productId": "lp-0005",
+        "slug": "mug-demon-slayer-tanjiro",
+        "name": "Mug Demon Slayer — Tanjiro",
+        "image": "https://placehold.co/600x600/ffdd00/1d1d1b?text=Mug+Tanjiro",
+        "quantity": 1,
+        "unitPrice": { "amount": 1290, "currency": "EUR" }
+      }
+    ],
+    "subtotal": { "amount": 4470, "currency": "EUR" },
+    "shipping": { "amount": 0, "currency": "EUR", "method": "Retrait en boutique" },
+    "total": { "amount": 4470, "currency": "EUR" },
+    "shippingAddressId": null
+  }
+]

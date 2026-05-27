@@ -22,6 +22,14 @@ import AboutView from '@/views/AboutView.vue'
 import ContactView from '@/views/ContactView.vue'
 import LegalView from '@/views/LegalView.vue'
 import TermsView from '@/views/TermsView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import AccountLayout from '@/views/account/AccountLayout.vue'
+import AccountOrders from '@/views/account/AccountOrders.vue'
+import AccountProfile from '@/views/account/AccountProfile.vue'
+import AccountAddresses from '@/views/account/AccountAddresses.vue'
+import AccountSettings from '@/views/account/AccountSettings.vue'
+import AdminView from '@/views/admin/AdminView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
 const routes = [
@@ -74,6 +82,56 @@ const routes = [
     meta: { title: 'CGV' },
   },
   {
+    path: '/connexion',
+    name: 'login',
+    component: LoginView,
+    meta: { title: 'Connexion' },
+  },
+  {
+    path: '/inscription',
+    name: 'register',
+    component: RegisterView,
+    meta: { title: 'Inscription' },
+  },
+  {
+    path: '/mon-compte',
+    component: AccountLayout,
+    meta: { requiresAuth: true, title: 'Mon compte' },
+    children: [
+      { path: '', redirect: { name: 'account-orders' } },
+      {
+        path: 'commandes',
+        name: 'account-orders',
+        component: AccountOrders,
+        meta: { title: 'Mes commandes' },
+      },
+      {
+        path: 'profil',
+        name: 'account-profile',
+        component: AccountProfile,
+        meta: { title: 'Mon profil' },
+      },
+      {
+        path: 'adresses',
+        name: 'account-addresses',
+        component: AccountAddresses,
+        meta: { title: 'Mes adresses' },
+      },
+      {
+        path: 'parametres',
+        name: 'account-settings',
+        component: AccountSettings,
+        meta: { title: 'Paramètres' },
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminView,
+    meta: { requiresAuth: true, requiresAdmin: true, title: 'Admin' },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: NotFoundView,
@@ -88,6 +146,33 @@ const router = createRouter({
     if (savedPosition) return savedPosition
     return { top: 0 }
   },
+})
+
+/**
+ * Guard global : protège les routes avec meta.requiresAuth / meta.requiresAdmin.
+ *
+ * On ne peut PAS importer useAuthStore au top du fichier (Pinia n'est pas
+ * encore monté à ce moment-là), il faut l'importer DANS la fonction de guard,
+ * appelée après que main.js ait fait `app.use(pinia)`.
+ */
+router.beforeEach(async (to) => {
+  // Import dynamique : Pinia est forcément initialisé quand un guard tire.
+  const { useAuthStore } = await import('@/stores/auth')
+  const auth = useAuthStore()
+
+  if (to.meta?.requiresAuth && !auth.isAuthenticated) {
+    // On garde la destination en query pour rediriger après login.
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+  if (to.meta?.requiresAdmin && !auth.isAdmin) {
+    return { name: 'home' }
+  }
+
+  // Inverse : si déjà connecté et on va sur /connexion ou /inscription,
+  // on file directement sur /mon-compte (pas de double connexion).
+  if ((to.name === 'login' || to.name === 'register') && auth.isAuthenticated) {
+    return { name: 'account-orders' }
+  }
 })
 
 router.afterEach((to) => {

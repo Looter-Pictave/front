@@ -1,15 +1,54 @@
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 import BrandLogo from '@/components/base/BrandLogo.vue'
 import BaseChip from '@/components/base/BaseChip.vue'
 import { useCartStore } from '@/stores/cart'
 import { useUiStore } from '@/stores/ui'
+import { useAuthStore } from '@/stores/auth'
 
+const router = useRouter()
 const cart = useCartStore()
 const ui = useUiStore()
+const auth = useAuthStore()
 const { count } = storeToRefs(cart)
+const { isAuthenticated, isAdmin, displayName, currentUser } = storeToRefs(auth)
+
+// Dropdown user : ouvert/fermé + fermeture sur click outside et Echap
+const userMenuOpen = ref(false)
+const userMenuRef = ref(null)
+
+function toggleUserMenu() {
+  userMenuOpen.value = !userMenuOpen.value
+}
+function closeUserMenu() {
+  userMenuOpen.value = false
+}
+function handleClickOutside(e) {
+  if (userMenuRef.value && !userMenuRef.value.contains(e.target)) {
+    closeUserMenu()
+  }
+}
+function handleEsc(e) {
+  if (e.key === 'Escape') closeUserMenu()
+}
+
+onMounted(() => {
+  document.addEventListener('mousedown', handleClickOutside)
+  document.addEventListener('keydown', handleEsc)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', handleClickOutside)
+  document.removeEventListener('keydown', handleEsc)
+})
+
+async function handleLogout() {
+  closeUserMenu()
+  await auth.logout()
+  router.push({ name: 'home' })
+}
 </script>
 
 <template>
@@ -31,6 +70,83 @@ const { count } = storeToRefs(cart)
       </nav>
 
       <div class="header__actions">
+        <!-- Bouton Connexion si non authentifié -->
+        <RouterLink
+          v-if="!isAuthenticated"
+          :to="{ name: 'login' }"
+          class="header__login"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="header__login-label">Connexion</span>
+        </RouterLink>
+
+        <!-- Dropdown user si authentifié -->
+        <div v-else ref="userMenuRef" class="header__user">
+          <button
+            type="button"
+            class="header__user-trigger"
+            :aria-expanded="userMenuOpen"
+            aria-haspopup="menu"
+            @click="toggleUserMenu"
+          >
+            <span class="header__user-avatar" aria-hidden="true">
+              {{ (currentUser.firstName?.[0] ?? '?').toUpperCase() }}
+            </span>
+            <span class="header__user-name">{{ displayName }}</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+
+          <div v-if="userMenuOpen" class="header__menu" role="menu">
+            <RouterLink
+              :to="{ name: 'account-orders' }"
+              class="header__menu-item"
+              role="menuitem"
+              @click="closeUserMenu"
+            >
+              📦 Mes commandes
+            </RouterLink>
+            <RouterLink
+              :to="{ name: 'account-profile' }"
+              class="header__menu-item"
+              role="menuitem"
+              @click="closeUserMenu"
+            >
+              👤 Mon profil
+            </RouterLink>
+            <RouterLink
+              :to="{ name: 'account-addresses' }"
+              class="header__menu-item"
+              role="menuitem"
+              @click="closeUserMenu"
+            >
+              📍 Mes adresses
+            </RouterLink>
+            <RouterLink
+              v-if="isAdmin"
+              :to="{ name: 'admin' }"
+              class="header__menu-item header__menu-item--admin"
+              role="menuitem"
+              @click="closeUserMenu"
+            >
+              🛡️ Pannel admin
+            </RouterLink>
+            <div class="header__menu-sep" role="separator" />
+            <button
+              type="button"
+              class="header__menu-item header__menu-item--logout"
+              role="menuitem"
+              @click="handleLogout"
+            >
+              ↩️ Déconnexion
+            </button>
+          </div>
+        </div>
+
         <button
           type="button"
           class="header__cart"
@@ -167,10 +283,135 @@ const { count } = storeToRefs(cart)
   .header__cart-label {
     display: inline;
   }
+  .header__user-name {
+    display: inline;
+  }
+  .header__login-label {
+    display: inline;
+  }
 }
 @media (min-width: 960px) {
   .header__nav {
     display: flex;
   }
+}
+
+/* ===== Bouton Connexion (non authentifié) ===== */
+.header__login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-brand-ink);
+  border: 2px solid var(--color-brand-ink);
+  border-radius: 9999px;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.header__login:hover {
+  background: var(--color-brand-ink);
+  color: var(--color-brand-yellow);
+}
+.header__login-label {
+  display: none;
+}
+
+/* ===== Dropdown user (authentifié) ===== */
+.header__user {
+  position: relative;
+}
+.header__user-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-brand-ink);
+  color: var(--color-brand-yellow);
+  border: none;
+  border-radius: 9999px;
+  padding: 0.35rem 0.8rem 0.35rem 0.35rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.header__user-trigger:hover {
+  background: #000;
+}
+.header__user-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-brand-yellow);
+  color: var(--color-brand-ink);
+  border-radius: 9999px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+}
+.header__user-name {
+  display: none;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.header__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: var(--color-brand-paper);
+  border: 2px solid var(--color-brand-ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-stamp);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  z-index: 60;
+}
+.header__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--color-brand-ink);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+.header__menu-item:hover {
+  background: var(--color-brand-cream);
+}
+.header__menu-item--admin {
+  background: var(--color-brand-ink);
+  color: var(--color-brand-yellow);
+}
+.header__menu-item--admin:hover {
+  background: #000;
+  color: var(--color-brand-yellow);
+}
+.header__menu-item--logout {
+  color: var(--color-stock-out);
+}
+.header__menu-sep {
+  height: 1px;
+  background: var(--color-line);
+  margin: 0.3rem 0;
 }
 </style>
