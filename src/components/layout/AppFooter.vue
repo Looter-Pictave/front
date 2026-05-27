@@ -196,29 +196,30 @@ const year = new Date().getFullYear()
 }
 
 /* ===== Patch dark mode =====
-   Le footer noir est un élément identitaire fort : il reste noir en dark
-   mode pour ne pas se confondre avec le fond de page (qui devient sombre
-   lui aussi). Sans ce patch, var(--color-brand-ink) swapperait en cream
-   et le footer perdrait son contraste signature. */
+   Le footer reste noir mais on l'assombrit légèrement (#0d0e10) pour qu'il
+   se distingue du fond de page sombre (#15171a). Sans ce patch, var(--color-
+   brand-ink) swapperait en cream et le footer perdrait son contraste. */
 [data-theme="dark"] .footer {
-  background: #1d1d1b;
-  color: #ffffff;
-  border-top: 2px solid #fff8d6;
+  background: #0d0e10;
+  color: #e8e8e8;
 }
 [data-theme="dark"] .footer__list a,
 [data-theme="dark"] .footer__col a {
-  color: #ffffff;
+  color: #e8e8e8;
 }
 [data-theme="dark"] .footer__list a:hover,
 [data-theme="dark"] .footer__col a:hover {
-  color: #ffdd00;
+  color: var(--color-brand-yellow);
 }
 [data-theme="dark"] .footer__socials a {
-  border-color: #ffdd00;
-  color: #ffdd00;
+  border-color: var(--color-brand-yellow);
+  color: var(--color-brand-yellow);
 }
 [data-theme="dark"] .footer__socials a:hover {
-  background: #ffdd00;
+  background: var(--color-brand-yellow);
   color: #1d1d1b;
 }
+/* Le bandeau zigzag jaune au-dessus du footer reste jaune dans tous les cas
+   (token brand fixe), c'est lui qui assure la transition visuelle entre la
+   page (claire ou sombre) et le footer noir. */
 </style>

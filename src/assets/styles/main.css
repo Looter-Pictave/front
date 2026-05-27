@@ -18,6 +18,10 @@
   --color-stock-low: #ef6c00;
   --color-stock-out: #c62828;
 
+  /* Background du body (équivalent à paper en light, mais une var
+     séparée pour pouvoir le rendre PLUS SOMBRE que les cards en dark). */
+  --color-page-bg: #ffffff;
+
   /* Textes secondaires sur fond clair — 3 niveaux d'opacité noir.
      On harmonise les valeurs proches (0.5/0.55/0.6 → muted, 0.1/0.15 → line). */
   --color-ink-muted: rgb(0 0 0 / 0.55);
@@ -43,49 +47,59 @@
 }
 
 /* ----------------------------------------------------------------------------
- * Dark mode — override des tokens.
+ * Dark mode — palette "sober" inspirée Notion / Linear / Vercel.
  *
- * Stratégie : on swap ink <-> paper/cream (l'encre devient claire, le papier
- * devient sombre) + on inverse les opacités des textes secondaires.
- * Comme TOUS les composants utilisent ces tokens (cf. refactor session 2),
- * 95% de l'app passe en dark mode sans avoir à les modifier un par un.
+ * Philosophie :
+ *   - Fond de page TRÈS sombre (#15171a), proche du noir mais bleuté
+ *   - Cards "elevated" : un cran plus claires que la page (#1f2125)
+ *     -> la hiérarchie visuelle vient de l'ÉLÉVATION (différence de fond),
+ *        pas de bordures épaisses ni d'ombres
+ *   - Surfaces "++ elevated" (sections alt, accents) : encore un cran (#2a2c30)
+ *   - Texte principal : blanc cassé neutre (#e8e8e8), pas cream chaud
+ *   - SUPPRESSION des ombres "stamp" : un offset clair sur fond sombre fait
+ *     un halo disgracieux. On compense par la hiérarchie d'élévation.
+ *   - Le jaune brand reste comme ACCENT (CTAs, hover, badges) — pas comme
+ *     fond massif.
  *
- * Cas spéciaux qui DOIVENT rester avec leur couleur de light mode :
- *   - Fond jaune du header (var(--color-brand-yellow) reste #ffdd00)
- *   - Fond noir du footer (patch ciblé dans AppFooter.vue)
- *   - Cart button noir dans le header (patch ciblé dans AppHeader.vue)
- *   - Les couleurs de stock (in/low/out) restent comme en light
+ * Header et footer ont leurs propres patches dans leurs CSS scoped pour
+ * passer en mode sombre cohérent (cf. AppHeader.vue / AppFooter.vue).
  * -------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --color-brand-ink: #fff8d6;       /* "encre" devient cream */
-  --color-brand-paper: #1a1a18;     /* surface principale -> sombre */
-  --color-brand-cream: #252320;     /* surface alt -> dark elevated */
+  --color-brand-ink: #e8e8e8;       /* texte principal : blanc cassé neutre */
+  --color-brand-paper: #1f2125;     /* surface elevated (cards, formulaires) */
+  --color-brand-cream: #2a2c30;     /* surface elevated++ (sections alt) */
+  --color-page-bg: #15171a;         /* fond de page (PLUS sombre que paper) */
 
-  /* Textes secondaires sur fond sombre : opacités blanches */
-  --color-ink-muted: rgb(255 255 255 / 0.6);
+  /* Textes secondaires : opacités blanches */
+  --color-ink-muted: rgb(255 255 255 / 0.55);
   --color-ink-soft: rgb(255 255 255 / 0.78);
-  --color-line: rgb(255 255 255 / 0.15);
+  --color-line: rgb(255 255 255 / 0.1);
 
-  /* Les ombres "stamp" doivent être claires sur fond sombre */
-  --shadow-stamp-sm: 2px 2px 0 0 #fff8d6;
-  --shadow-stamp: 4px 4px 0 0 #fff8d6;
-  --shadow-stamp-lg: 6px 6px 0 0 #fff8d6;
+  /* Plus d'ombres "stamp" en dark — l'élévation des fonds suffit à
+     hiérarchiser. Les composants qui s'appuyaient sur la shadow gardent
+     juste leur bordure (qui devient #e8e8e8 = très subtile sur #1f2125). */
+  --shadow-stamp-sm: none;
+  --shadow-stamp: none;
+  --shadow-stamp-lg: none;
+  --shadow-stamp-yellow: none;
+  --shadow-stamp-yellow-sm: none;
 }
 
 /* Base */
 html {
-  background: var(--color-brand-paper);
+  background: var(--color-page-bg);
   color: var(--color-brand-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   /* Transition douce quand on toggle le thème */
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--color-brand-paper);
+  background: var(--color-page-bg);
+  transition: background 0.25s ease;
 }
 
 /* Selection */

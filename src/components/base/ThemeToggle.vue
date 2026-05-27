@@ -59,20 +59,37 @@ const { isDark } = storeToRefs(theme)
   width: 36px;
   height: 36px;
   background: transparent;
-  border: 2px solid #1d1d1b;
+  /* var(--color-brand-ink) swap automatiquement en dark mode (noir -> blanc
+     cassé), donc le bouton reste visible sur fond jaune (light, header)
+     ET sur fond charcoal (dark, header). */
+  border: 2px solid var(--color-brand-ink);
   border-radius: 9999px;
-  color: #1d1d1b;
+  color: var(--color-brand-ink);
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease, color 0.2s ease,
+    border-color 0.2s ease;
   padding: 0;
   flex-shrink: 0;
 }
 .theme-toggle:hover {
-  background: rgb(0 0 0 / 0.08);
+  /* var(--color-line) swap aussi : noir/0.15 en light, blanc/0.1 en dark */
+  background: var(--color-line);
   transform: rotate(-12deg);
 }
 .theme-toggle:active {
   transform: rotate(0deg) scale(0.95);
+}
+
+/* En dark mode, le header passe en charcoal et le toggle doit garder un
+   bon contraste. Les vars swappées font déjà 90% du boulot, mais comme
+   le ThemeToggle est entre les autres CTAs jaunes, on peut le forcer en
+   jaune pour mettre en valeur l'action. */
+[data-theme="dark"] .theme-toggle {
+  border-color: var(--color-brand-yellow);
+  color: var(--color-brand-yellow);
+}
+[data-theme="dark"] .theme-toggle:hover {
+  background: rgb(255 221 0 / 0.12);
 }
 
 /* L'icône change déjà via v-if ; petite animation au switch quand même. */

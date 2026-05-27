@@ -420,44 +420,35 @@ async function handleLogout() {
 }
 
 /* ===== Patch dark mode =====
-   Le header reste sur fond jaune brand peu importe le thème : il faut donc
-   FORCER les éléments qui utilisaient var(--color-brand-ink) à garder leur
-   noir d'origine (sinon les vars swappées rendent le texte invisible sur
-   le jaune). Le dropdown s'adapte tout seul, lui (fond paper -> sombre). */
+   En dark mode, le header passe en CHARCOAL au lieu de rester jaune
+   (le jaune massif au-dessus d'une page sombre est trop agressif). Les
+   CTAs (cart, user) deviennent jaune brand → l'accent identitaire reste
+   présent mais ponctuel. */
 [data-theme="dark"] .header {
-  border-bottom-color: #1d1d1b;
-  color: #1d1d1b;
-}
-[data-theme="dark"] .header__name,
-[data-theme="dark"] .header__tagline,
-[data-theme="dark"] .header__link {
-  color: #1d1d1b;
-}
-[data-theme="dark"] .header__link:hover,
-[data-theme="dark"] .header__link.router-link-active {
-  border-bottom-color: #1d1d1b;
-}
-[data-theme="dark"] .header__login {
-  border-color: #1d1d1b;
-  color: #1d1d1b;
-}
-[data-theme="dark"] .header__login:hover {
-  background: #1d1d1b;
-  color: #ffdd00;
+  background: var(--color-brand-paper); /* #1f2125 elevated */
+  border-bottom-color: var(--color-line);
 }
 [data-theme="dark"] .header__cart {
-  background: #1d1d1b;
-  color: #ffffff;
+  background: var(--color-brand-yellow);
+  color: #1d1d1b;
 }
 [data-theme="dark"] .header__cart:hover {
-  background: #000;
+  background: var(--color-brand-yellow-dark);
 }
 [data-theme="dark"] .header__user-trigger {
-  background: #1d1d1b;
-  color: #ffdd00;
+  background: var(--color-brand-yellow);
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__user-trigger:hover {
+  background: var(--color-brand-yellow-dark);
 }
 [data-theme="dark"] .header__user-avatar {
-  background: #ffdd00;
+  background: #1d1d1b;
+  color: var(--color-brand-yellow);
+}
+[data-theme="dark"] .header__login:hover {
+  background: var(--color-brand-yellow);
   color: #1d1d1b;
+  border-color: var(--color-brand-yellow);
 }
 </style>
