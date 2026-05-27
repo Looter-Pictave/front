@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import BrandLogo from '@/components/base/BrandLogo.vue'
+import { SHOP } from '@/config/shop'
 
 const year = new Date().getFullYear()
 </script>
@@ -26,8 +27,13 @@ const year = new Date().getFullYear()
 
       <div class="footer__col">
         <h3 class="footer__title">Boutique</h3>
-        <p>19 rue de la Regratterie<br />86000 Poitiers</p>
-        <p>Mardi - Samedi<br />10h30 - 13h30 / 14h - 19h</p>
+        <p>
+          {{ SHOP.address.street }}<br />
+          {{ SHOP.address.postalCode }} {{ SHOP.address.city }}
+        </p>
+        <p v-for="h in SHOP.hours" :key="h.days">
+          {{ h.days }}<br />{{ h.slots.join(' / ') }}
+        </p>
       </div>
 
       <div class="footer__col">
@@ -43,7 +49,7 @@ const year = new Date().getFullYear()
         <h3 class="footer__title">Suivez-nous</h3>
         <div class="footer__socials">
           <a
-            href="https://www.facebook.com/people/Looter-Pictave/61578506021279/"
+            :href="SHOP.social.facebook"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
@@ -53,7 +59,7 @@ const year = new Date().getFullYear()
             </svg>
           </a>
           <a
-            href="https://www.instagram.com/looterpictave/"
+            :href="SHOP.social.instagram"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -69,8 +75,10 @@ const year = new Date().getFullYear()
     </div>
 
     <div class="footer__legal">
-      © {{ year }} Looter Pictave — Tous droits réservés.
+      © {{ year }} {{ SHOP.name }} — Tous droits réservés.
       <span>·</span>
+      <!-- TODO : brancher sur les vraies routes une fois LegalView et
+           TermsView créées (commit suivant). -->
       <a href="#">Mentions légales</a>
       <span>·</span>
       <a href="#">CGV</a>
