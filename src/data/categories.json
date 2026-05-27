@@ -1,0 +1,9 @@
+[
+  { "id": "figurines", "slug": "figurines", "name": "Figurines", "icon": "🎎" },
+  { "id": "statues", "slug": "statues", "name": "Statues résine", "icon": "🗿" },
+  { "id": "maquettes", "slug": "maquettes", "name": "Maquettes", "icon": "🧩" },
+  { "id": "tshirts", "slug": "t-shirts", "name": "T-shirts", "icon": "👕" },
+  { "id": "mugs", "slug": "mugs", "name": "Mugs", "icon": "☕" },
+  { "id": "cartes", "slug": "cartes-tcg", "name": "Cartes TCG", "icon": "🃏" },
+  { "id": "goodies", "slug": "goodies", "name": "Goodies", "icon": "🎁" }
+]

@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+ *  Looter Pictave — Design tokens
+ *  Conformes à la DA livrée par l'agence : jaune brand + noir encre + blanc,
+ *  typo display chunky (Bungee) + sans-serif moderne (Inter).
+ * -------------------------------------------------------------------------- */
+@theme {
+  --color-brand-yellow: #ffdd00;
+  --color-brand-yellow-dark: #f5c500;
+  --color-brand-ink: #1d1d1b;
+  --color-brand-ink-soft: #181614;
+  --color-brand-paper: #ffffff;
+  --color-brand-cream: #fff8d6;
+
+  --color-stock-in: #2e7d32;
+  --color-stock-low: #ef6c00;
+  --color-stock-out: #c62828;
+
+  --font-display: "Bungee", "Impact", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --shadow-stamp: 4px 4px 0 0 var(--color-brand-yellow);
+  --shadow-stamp-ink: 4px 4px 0 0 var(--color-brand-ink);
+
+  --radius-chip: 9999px;
+}
+
+/* Base */
+html {
+  background: var(--color-brand-paper);
+  color: var(--color-brand-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-brand-yellow);
+  color: var(--color-brand-ink);
+}
+
+/* Petit utilitaire pour le drop-shadow jaune façon logo */
+.text-stamp {
+  font-family: var(--font-display);
+  color: var(--color-brand-ink);
+  text-shadow: 3px 3px 0 var(--color-brand-yellow);
+  letter-spacing: 0.02em;
+}
