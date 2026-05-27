@@ -20,6 +20,8 @@ import ProductView from '@/views/ProductView.vue'
 import CartView from '@/views/CartView.vue'
 import AboutView from '@/views/AboutView.vue'
 import ContactView from '@/views/ContactView.vue'
+import LegalView from '@/views/LegalView.vue'
+import TermsView from '@/views/TermsView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
 const routes = [
@@ -58,6 +60,18 @@ const routes = [
     name: 'contact',
     component: ContactView,
     meta: { title: 'Contact' },
+  },
+  {
+    path: '/mentions-legales',
+    name: 'legal',
+    component: LegalView,
+    meta: { title: 'Mentions légales' },
+  },
+  {
+    path: '/cgv',
+    name: 'terms',
+    component: TermsView,
+    meta: { title: 'CGV' },
   },
   {
     path: '/:pathMatch(.*)*',

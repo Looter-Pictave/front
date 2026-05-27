@@ -41,7 +41,45 @@ export const SHOP = {
     facebook: 'https://www.facebook.com/people/Looter-Pictave/61578506021279/',
     instagram: 'https://www.instagram.com/looterpictave/',
   },
+
+  /**
+   * Informations légales — utilisées par LegalView (Mentions légales).
+   *
+   * ⚠️ TODO AVANT MISE EN PROD : remplacer toutes les valeurs `'TODO …'`
+   *    par les vraies infos. Source : extrait Kbis / avis INSEE / contrat
+   *    d'hébergement. Les pages /mentions-legales et /cgv affichent ces
+   *    valeurs avec un style "warning" jaune fluo tant qu'elles valent TODO,
+   *    impossible à louper visuellement.
+   *
+   * Mentions obligatoires (LCEN art. 6 III) :
+   *   - nom (perso ou raison sociale)
+   *   - forme juridique + capital si société
+   *   - SIRET / RCS
+   *   - directeur de publication
+   *   - hébergeur (nom, adresse, téléphone)
+   */
+  legal: {
+    legalForm: 'TODO — forme juridique (EI / EURL / SARL / SAS…)',
+    capital: null, // si société : { amount: 1000, currency: 'EUR' }
+    siret: 'TODO — numéro SIRET (14 chiffres)',
+    rcs: 'TODO — ex: RCS Poitiers B 123 456 789',
+    vatNumber: null, // optionnel — n° TVA intracommunautaire
+    publicationDirector: 'TODO — nom du directeur de publication',
+    host: {
+      name: 'TODO — nom de l\'hébergeur (ex: OVH SAS, Vercel Inc.)',
+      address: 'TODO — adresse postale de l\'hébergeur',
+      phone: 'TODO — téléphone de l\'hébergeur',
+    },
+  },
 }
+
+/**
+ * Helper : détecte si une valeur est encore un TODO non rempli.
+ * Permet aux pages légales d'afficher un styling "warning" visible
+ * tant que les vraies données n'ont pas été saisies.
+ */
+export const isTodo = (value) =>
+  typeof value === 'string' && value.startsWith('TODO')
 
 // ----------------------------------------------------------------------------
 // Helpers dérivés

@@ -77,11 +77,9 @@ const year = new Date().getFullYear()
     <div class="footer__legal">
       © {{ year }} {{ SHOP.name }} — Tous droits réservés.
       <span>·</span>
-      <!-- TODO : brancher sur les vraies routes une fois LegalView et
-           TermsView créées (commit suivant). -->
-      <a href="#">Mentions légales</a>
+      <RouterLink :to="{ name: 'legal' }">Mentions légales</RouterLink>
       <span>·</span>
-      <a href="#">CGV</a>
+      <RouterLink :to="{ name: 'terms' }">CGV</RouterLink>
     </div>
   </footer>
 </template>
