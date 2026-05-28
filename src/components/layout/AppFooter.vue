@@ -91,10 +91,11 @@ const year = new Date().getFullYear()
   margin-top: auto;
   position: relative;
 }
-/* Pas de fond : la zone au-dessus des montagnes laisse voir le fond de
-   page (plus de bande jaune). Les montagnes noires émergent du footer. */
+/* Fond jaune : c'est lui qui fait ressortir nettement les montagnes noires
+   au-dessus du footer (sans lui, montagnes noires sur footer noir = elles
+   se fondent et disparaissent visuellement). */
 .footer__decor {
-  background: transparent;
+  background: var(--color-brand-yellow);
   line-height: 0;
 }
 .footer__decor svg {
