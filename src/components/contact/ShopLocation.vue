@@ -15,7 +15,10 @@ import { SHOP, MAPS_EMBED_URL, MAPS_DIRECTIONS_URL } from '@/config/shop'
 </script>
 
 <template>
-  <section class="shop-location" aria-label="Adresse et horaires de la boutique">
+  <section
+    class="shop-location panel panel--lg"
+    aria-label="Adresse et horaires de la boutique"
+  >
     <div class="shop-location__info">
       <div class="shop-location__block">
         <span class="shop-location__label">Adresse</span>
@@ -67,14 +70,11 @@ import { SHOP, MAPS_EMBED_URL, MAPS_DIRECTIONS_URL } from '@/config/shop'
 </template>
 
 <style scoped>
+/* surface fournie par .panel.panel--lg */
 .shop-location {
   display: grid;
   grid-template-columns: 1fr;
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: 0.8rem;
   overflow: hidden;
-  box-shadow: var(--shadow-stamp-lg);
   text-align: left;
 }
 @media (min-width: 760px) {

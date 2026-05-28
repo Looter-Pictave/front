@@ -17,7 +17,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
     </section>
 
     <section class="grid">
-      <article class="card">
+      <article class="card panel">
         <BaseBadge variant="yellow" size="lg">Espace<br />museum</BaseBadge>
         <h2>Une vraie collection à voir</h2>
         <p>
@@ -26,7 +26,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
         </p>
       </article>
 
-      <article class="card">
+      <article class="card panel">
         <BaseBadge variant="ink" size="lg">Import<br />Japon</BaseBadge>
         <h2>Direct du Japon</h2>
         <p>
@@ -35,7 +35,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
         </p>
       </article>
 
-      <article class="card">
+      <article class="card panel">
         <BaseBadge variant="yellow" size="lg">Occasion<br />&amp; rachat</BaseBadge>
         <h2>On rachète tes pièces</h2>
         <p>
@@ -44,7 +44,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
         </p>
       </article>
 
-      <article class="card">
+      <article class="card panel">
         <BaseBadge variant="ink" size="lg">Ateliers<br />&amp; events</BaseBadge>
         <h2>Événements en boutique</h2>
         <p>
@@ -96,16 +96,13 @@ import BaseButton from '@/components/base/BaseButton.vue'
     grid-template-columns: 1fr 1fr;
   }
 }
+/* surface fournie par .panel */
 .card {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: 0.8rem;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   align-items: flex-start;
-  box-shadow: var(--shadow-stamp);
 }
 .card h2 {
   font-family: var(--font-display);

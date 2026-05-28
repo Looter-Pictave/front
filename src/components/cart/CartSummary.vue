@@ -9,7 +9,7 @@ const { subtotal, count } = storeToRefs(cart)
 </script>
 
 <template>
-  <aside class="summary">
+  <aside class="summary panel">
     <h2 class="summary__title">Récapitulatif</h2>
     <div class="summary__row">
       <span>Sous-total ({{ count }} article{{ count > 1 ? 's' : '' }})</span>
@@ -34,15 +34,12 @@ const { subtotal, count } = storeToRefs(cart)
 </template>
 
 <style scoped>
+/* surface fournie par .panel */
 .summary {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: 0.8rem;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: var(--shadow-stamp);
 }
 .summary__title {
   margin: 0;

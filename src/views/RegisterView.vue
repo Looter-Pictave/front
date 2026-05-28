@@ -2,6 +2,8 @@
 import { ref, computed } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseField from '@/components/base/BaseField.vue'
+import FormMessage from '@/components/ui/FormMessage.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
@@ -51,7 +53,7 @@ async function submit() {
 
 <template>
   <div class="page">
-    <div class="auth-card">
+    <div class="auth-card panel panel--lg">
       <h1 class="auth-card__title text-stamp">Créer un compte</h1>
       <p class="auth-card__lead">
         Quelques infos et c'est fait — tu pourras retrouver tes commandes,
@@ -60,68 +62,57 @@ async function submit() {
 
       <form class="form" @submit.prevent="submit">
         <div class="form__row">
-          <label class="form__field">
-            <span>Prénom</span>
-            <input
-              v-model="form.firstName"
-              type="text"
-              required
-              autocomplete="given-name"
-            />
-          </label>
-          <label class="form__field">
-            <span>Nom</span>
-            <input
-              v-model="form.lastName"
-              type="text"
-              required
-              autocomplete="family-name"
-            />
-          </label>
+          <BaseField
+            v-model="form.firstName"
+            label="Prénom"
+            type="text"
+            required
+            autocomplete="given-name"
+          />
+          <BaseField
+            v-model="form.lastName"
+            label="Nom"
+            type="text"
+            required
+            autocomplete="family-name"
+          />
         </div>
 
-        <label class="form__field">
-          <span>Email</span>
-          <input
-            v-model="form.email"
-            type="email"
-            required
-            autocomplete="email"
-            placeholder="ton.email@exemple.fr"
-          />
-        </label>
+        <BaseField
+          v-model="form.email"
+          label="Email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="ton.email@exemple.fr"
+        />
 
-        <label class="form__field">
-          <span>Téléphone <span class="form__optional">(optionnel)</span></span>
-          <input
-            v-model="form.phone"
-            type="tel"
-            autocomplete="tel"
-            placeholder="+33 6 12 34 56 78"
-          />
-        </label>
+        <BaseField
+          v-model="form.phone"
+          label="Téléphone"
+          hint="(optionnel)"
+          type="tel"
+          autocomplete="tel"
+          placeholder="+33 6 12 34 56 78"
+        />
 
-        <label class="form__field">
-          <span>Mot de passe</span>
-          <input
-            v-model="form.password"
-            type="password"
-            required
-            minlength="6"
-            autocomplete="new-password"
-          />
-        </label>
+        <BaseField
+          v-model="form.password"
+          label="Mot de passe"
+          type="password"
+          required
+          minlength="6"
+          autocomplete="new-password"
+        />
 
-        <label class="form__field">
-          <span>Confirmation du mot de passe</span>
-          <input
-            v-model="form.passwordConfirm"
-            type="password"
-            required
-            autocomplete="new-password"
-            :class="{ 'form__input--error': !passwordsMatch }"
-          />
-        </label>
+        <BaseField
+          v-model="form.passwordConfirm"
+          label="Confirmation du mot de passe"
+          type="password"
+          required
+          autocomplete="new-password"
+          :error="!passwordsMatch ? 'Les mots de passe ne correspondent pas.' : ''"
+        />
 
         <label class="form__check">
           <input v-model="form.acceptTerms" type="checkbox" required />
@@ -133,9 +124,9 @@ async function submit() {
           </span>
         </label>
 
-        <p v-if="localError" class="form__error" role="alert">
+        <FormMessage v-if="localError" variant="error">
           ⚠️ {{ localError }}
-        </p>
+        </FormMessage>
 
         <BaseButton type="submit" size="lg" block :disabled="auth.isLoading">
           {{ auth.isLoading ? 'Création…' : 'Créer mon compte' }}
@@ -156,12 +147,9 @@ async function submit() {
   margin: 0 auto;
   padding: 3rem 1.25rem 4rem;
 }
+/* surface fournie par .panel.panel--lg */
 .auth-card {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-lg);
   padding: 2rem 1.8rem;
-  box-shadow: var(--shadow-stamp-lg);
 }
 .auth-card__title {
   font-size: clamp(1.8rem, 4vw, 2.4rem);
@@ -189,33 +177,6 @@ async function submit() {
     grid-template-columns: 1fr 1fr;
   }
 }
-.form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-.form__optional {
-  color: var(--color-ink-muted);
-  font-weight: 400;
-  font-size: 0.78rem;
-}
-.form__field input {
-  padding: 0.7rem 0.9rem;
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  background: var(--color-brand-paper);
-}
-.form__field input:focus {
-  outline: 2px solid var(--color-brand-yellow);
-  outline-offset: 2px;
-}
-.form__input--error {
-  border-color: var(--color-stock-out);
-}
 .form__check {
   display: flex;
   align-items: flex-start;
@@ -233,16 +194,6 @@ async function submit() {
   color: var(--color-brand-ink);
   font-weight: 700;
   text-decoration: underline;
-}
-.form__error {
-  background: rgb(198 40 40 / 0.1);
-  border: 2px solid var(--color-stock-out);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem 0.8rem;
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--color-stock-out);
-  font-weight: 700;
 }
 .form__switch {
   text-align: center;

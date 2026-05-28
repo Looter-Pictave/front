@@ -3,6 +3,10 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseChip from '@/components/base/BaseChip.vue'
+import BaseField from '@/components/base/BaseField.vue'
+import PageHeader from '@/components/ui/PageHeader.vue'
+import EmptyState from '@/components/ui/EmptyState.vue'
+import FormMessage from '@/components/ui/FormMessage.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
@@ -50,25 +54,24 @@ async function remove(addressId) {
 </script>
 
 <template>
-  <section class="page">
-    <header class="page__head">
-      <h1 class="page__title text-stamp">Mes adresses</h1>
-      <p class="page__sub">
-        Tes adresses de livraison et de facturation pour passer commande plus
-        rapidement.
-      </p>
-    </header>
+  <section>
+    <PageHeader
+      title="Mes adresses"
+      subtitle="Tes adresses de livraison et de facturation pour passer commande plus rapidement."
+    />
 
-    <div v-if="currentUser.addresses.length === 0 && !showForm" class="empty">
-      <p>Tu n'as pas encore enregistré d'adresse.</p>
+    <EmptyState
+      v-if="currentUser.addresses.length === 0 && !showForm"
+      message="Tu n'as pas encore enregistré d'adresse."
+    >
       <BaseButton @click="showForm = true">Ajouter une adresse</BaseButton>
-    </div>
+    </EmptyState>
 
     <div v-else class="grid">
       <article
         v-for="addr in currentUser.addresses"
         :key="addr.id"
-        class="addr"
+        class="addr panel"
       >
         <div class="addr__head">
           <h3 class="addr__label">{{ addr.label }}</h3>
@@ -108,65 +111,49 @@ async function remove(addressId) {
       + Ajouter une autre adresse
     </BaseButton>
 
-    <form v-if="showForm" class="form" @submit.prevent="submit">
+    <form v-if="showForm" class="form panel" @submit.prevent="submit">
       <h3 class="form__title">Nouvelle adresse</h3>
 
-      <label class="form__field">
-        <span>Libellé</span>
-        <input
-          v-model="newAddress.label"
-          type="text"
-          required
-          placeholder="Domicile, Bureau…"
-        />
-      </label>
+      <BaseField
+        v-model="newAddress.label"
+        label="Libellé"
+        type="text"
+        required
+        placeholder="Domicile, Bureau…"
+      />
 
       <div class="form__row">
-        <label class="form__field">
-          <span>Prénom</span>
-          <input v-model="newAddress.firstName" type="text" required />
-        </label>
-        <label class="form__field">
-          <span>Nom</span>
-          <input v-model="newAddress.lastName" type="text" required />
-        </label>
+        <BaseField v-model="newAddress.firstName" label="Prénom" type="text" required />
+        <BaseField v-model="newAddress.lastName" label="Nom" type="text" required />
       </div>
 
-      <label class="form__field">
-        <span>Rue</span>
-        <input
-          v-model="newAddress.street"
-          type="text"
-          required
-          placeholder="Numéro et nom de rue"
-        />
-      </label>
+      <BaseField
+        v-model="newAddress.street"
+        label="Rue"
+        type="text"
+        required
+        placeholder="Numéro et nom de rue"
+      />
 
       <div class="form__row">
-        <label class="form__field form__field--small">
-          <span>Code postal</span>
-          <input
-            v-model="newAddress.postalCode"
-            type="text"
-            required
-            inputmode="numeric"
-          />
-        </label>
-        <label class="form__field">
-          <span>Ville</span>
-          <input v-model="newAddress.city" type="text" required />
-        </label>
+        <BaseField
+          v-model="newAddress.postalCode"
+          label="Code postal"
+          type="text"
+          required
+          inputmode="numeric"
+        />
+        <BaseField v-model="newAddress.city" label="Ville" type="text" required />
       </div>
 
-      <label class="form__field">
-        <span>Pays</span>
-        <input v-model="newAddress.country" type="text" required />
-      </label>
+      <BaseField v-model="newAddress.country" label="Pays" type="text" required />
 
-      <label class="form__field">
-        <span>Téléphone (optionnel)</span>
-        <input v-model="newAddress.phone" type="tel" />
-      </label>
+      <BaseField
+        v-model="newAddress.phone"
+        label="Téléphone"
+        hint="(optionnel)"
+        type="tel"
+      />
 
       <div class="form__checks">
         <label class="form__check">
@@ -183,48 +170,19 @@ async function remove(addressId) {
         </label>
       </div>
 
-      <p v-if="localError" class="form__error" role="alert">
-        ⚠️ {{ localError }}
-      </p>
+      <FormMessage v-if="localError" variant="error">⚠️ {{ localError }}</FormMessage>
 
       <div class="form__actions">
         <BaseButton variant="ghost" type="button" @click="showForm = false">
           Annuler
         </BaseButton>
-        <BaseButton type="submit" :disabled="auth.isLoading">
-          Enregistrer
-        </BaseButton>
+        <BaseButton type="submit" :disabled="auth.isLoading">Enregistrer</BaseButton>
       </div>
     </form>
   </section>
 </template>
 
 <style scoped>
-.page__head {
-  margin-bottom: 1.5rem;
-}
-.page__title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  margin: 0 0 0.4rem;
-}
-.page__sub {
-  margin: 0;
-  color: var(--color-ink-muted);
-  font-size: 0.95rem;
-}
-
-.empty {
-  background: var(--color-brand-cream);
-  border: 2px dashed var(--color-brand-ink);
-  border-radius: var(--radius-md);
-  padding: 3rem 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-}
-
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -237,12 +195,9 @@ async function remove(addressId) {
   }
 }
 
+/* surface fournie par .panel */
 .addr {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-md);
   padding: 1.2rem;
-  box-shadow: var(--shadow-stamp);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -284,12 +239,9 @@ async function remove(addressId) {
   margin-bottom: 1rem;
 }
 
+/* surface fournie par .panel */
 .form {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-md);
   padding: 1.5rem;
-  box-shadow: var(--shadow-stamp);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -305,32 +257,10 @@ async function remove(addressId) {
   grid-template-columns: 1fr;
   gap: 1rem;
 }
-@media (min-width: 600px) {
+@media (min-width: 640px) {
   .form__row {
     grid-template-columns: 1fr 1fr;
   }
-}
-.form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-.form__field--small {
-  max-width: 160px;
-}
-.form__field input {
-  padding: 0.6rem 0.85rem;
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  background: var(--color-brand-paper);
-}
-.form__field input:focus {
-  outline: 2px solid var(--color-brand-yellow);
-  outline-offset: 2px;
 }
 .form__checks {
   display: flex;
@@ -348,16 +278,6 @@ async function remove(addressId) {
   width: 18px;
   height: 18px;
   accent-color: var(--color-brand-ink);
-}
-.form__error {
-  background: rgb(198 40 40 / 0.1);
-  border: 2px solid var(--color-stock-out);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem 0.8rem;
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--color-stock-out);
-  font-weight: 700;
 }
 .form__actions {
   display: flex;

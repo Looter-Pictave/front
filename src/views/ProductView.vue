@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 
 import BaseButton from '@/components/base/BaseButton.vue'
-import BaseChip from '@/components/base/BaseChip.vue'
+import ProductBadges from '@/components/product/ProductBadges.vue'
 import ProductGallery from '@/components/product/ProductGallery.vue'
 import ProductGrid from '@/components/product/ProductGrid.vue'
 import ProductPrice from '@/components/product/ProductPrice.vue'
@@ -60,15 +60,7 @@ function addToCart() {
 
         <div class="product__chips">
           <StockBadge :stock="product.stock" />
-          <BaseChip v-if="product.condition === 'used'" variant="yellow" size="sm">
-            Occasion
-          </BaseChip>
-          <BaseChip v-if="product.condition === 'collector'" variant="ink" size="sm">
-            Collector
-          </BaseChip>
-          <BaseChip v-if="product.isImport" variant="outline" size="sm">
-            Import JP
-          </BaseChip>
+          <ProductBadges :product="product" />
         </div>
 
         <ProductPrice

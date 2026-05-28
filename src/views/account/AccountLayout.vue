@@ -18,7 +18,7 @@ async function handleLogout() {
 
 <template>
   <div class="account" v-if="currentUser">
-    <aside class="account__side">
+    <aside class="account__side panel">
       <div class="account__hello">
         <p class="account__hello-label">Bonjour</p>
         <p class="account__hello-name">{{ displayName }}</p>
@@ -114,12 +114,9 @@ async function handleLogout() {
   }
 }
 
+/* surface fournie par .panel */
 .account__side {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-md);
   padding: 1.4rem 1.2rem;
-  box-shadow: var(--shadow-stamp);
   display: flex;
   flex-direction: column;
   gap: 1rem;

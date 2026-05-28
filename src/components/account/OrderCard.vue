@@ -26,7 +26,7 @@ const itemCount = computed(() =>
 </script>
 
 <template>
-  <article class="order">
+  <article class="order panel">
     <header class="order__head">
       <div class="order__head-left">
         <p class="order__number">Commande {{ order.number }}</p>
@@ -90,12 +90,9 @@ const itemCount = computed(() =>
 </template>
 
 <style scoped>
+/* surface fournie par .panel */
 .order {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-md);
   padding: 1.2rem 1.4rem;
-  box-shadow: var(--shadow-stamp);
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -18,11 +18,24 @@
   --color-stock-low: #ef6c00;
   --color-stock-out: #c62828;
 
+  /* États de feedback (messages erreur / succès des formulaires) */
+  --color-error: #c62828;
+  --color-error-bg: rgb(198 40 40 / 0.1);
+  --color-success: #2e7d32;
+  --color-success-bg: rgb(46 125 50 / 0.1);
+
   /* Textes secondaires sur fond clair — 3 niveaux d'opacité noir.
      On harmonise les valeurs proches (0.5/0.55/0.6 → muted, 0.1/0.15 → line). */
   --color-ink-muted: rgb(0 0 0 / 0.55);
   --color-ink-soft: rgb(0 0 0 / 0.65);
   --color-line: rgb(0 0 0 / 0.15);
+
+  /* ===== Breakpoints (référence — voir note plus bas) ===== */
+  /* CSS ne permet pas var() dans les @media, donc ces tokens servent de
+     DOCUMENTATION du système. Les media queries utilisent les valeurs en
+     dur correspondantes : --bp-sm = 640px, --bp-md = 900px. */
+  --bp-sm: 640px;
+  --bp-md: 900px;
 
   /* ===== Typo ===== */
   --font-display: "Bungee", "Impact", system-ui, sans-serif;
@@ -67,4 +80,29 @@ body {
   color: var(--color-brand-ink);
   text-shadow: 3px 3px 0 var(--color-brand-yellow);
   letter-spacing: 0.02em;
+}
+
+/* ----------------------------------------------------------------------------
+ *  .panel — surface "carte" signature Looter Pictave.
+ *  Fond + bordure encre + radius + ombre stamp décalée. C'est LE pattern
+ *  visuel répété partout (cards produit, formulaires, résumés, blocs info...).
+ *  Centralisé ici pour ne plus le copier-coller dans chaque composant.
+ *
+ *  Variantes :
+ *    .panel        → ombre standard (4px)
+ *    .panel--lg    → ombre large (6px), radius plus grand (blocs mis en avant)
+ *    .panel--flat  → pas d'ombre (blocs secondaires)
+ * -------------------------------------------------------------------------- */
+.panel {
+  background: var(--color-brand-paper);
+  border: 2px solid var(--color-brand-ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-stamp);
+}
+.panel--lg {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-stamp-lg);
+}
+.panel--flat {
+  box-shadow: none;
 }

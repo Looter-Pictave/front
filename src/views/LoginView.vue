@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseField from '@/components/base/BaseField.vue'
+import FormMessage from '@/components/ui/FormMessage.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
@@ -27,7 +29,7 @@ async function submit() {
 
 <template>
   <div class="page">
-    <div class="auth-card">
+    <div class="auth-card panel panel--lg">
       <h1 class="auth-card__title text-stamp">Connexion</h1>
       <p class="auth-card__lead">
         Bon retour parmi nous ! Connecte-toi pour accéder à ton compte et
@@ -35,31 +37,27 @@ async function submit() {
       </p>
 
       <form class="form" @submit.prevent="submit">
-        <label class="form__field">
-          <span>Email</span>
-          <input
-            v-model="email"
-            type="email"
-            required
-            autocomplete="email"
-            placeholder="ton.email@exemple.fr"
-          />
-        </label>
+        <BaseField
+          v-model="email"
+          label="Email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="ton.email@exemple.fr"
+        />
 
-        <label class="form__field">
-          <span>Mot de passe</span>
-          <input
-            v-model="password"
-            type="password"
-            required
-            autocomplete="current-password"
-            placeholder="••••••••"
-          />
-        </label>
+        <BaseField
+          v-model="password"
+          label="Mot de passe"
+          type="password"
+          required
+          autocomplete="current-password"
+          placeholder="••••••••"
+        />
 
-        <p v-if="localError" class="form__error" role="alert">
+        <FormMessage v-if="localError" variant="error">
           ⚠️ {{ localError }}
-        </p>
+        </FormMessage>
 
         <BaseButton type="submit" size="lg" block :disabled="auth.isLoading">
           {{ auth.isLoading ? 'Connexion…' : 'Se connecter' }}
@@ -90,12 +88,9 @@ async function submit() {
   margin: 0 auto;
   padding: 3rem 1.25rem 4rem;
 }
+/* surface fournie par .panel.panel--lg */
 .auth-card {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-lg);
   padding: 2rem 1.8rem;
-  box-shadow: var(--shadow-stamp-lg);
 }
 .auth-card__title {
   font-size: clamp(1.8rem, 4vw, 2.4rem);
@@ -112,35 +107,6 @@ async function submit() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-.form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-.form__field input {
-  padding: 0.7rem 0.9rem;
-  border: 2px solid var(--color-brand-ink);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  background: var(--color-brand-paper);
-}
-.form__field input:focus {
-  outline: 2px solid var(--color-brand-yellow);
-  outline-offset: 2px;
-}
-.form__error {
-  background: rgb(198 40 40 / 0.1);
-  border: 2px solid var(--color-stock-out);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem 0.8rem;
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--color-stock-out);
-  font-weight: 700;
 }
 .form__switch {
   text-align: center;

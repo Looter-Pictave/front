@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import BaseChip from '@/components/base/BaseChip.vue'
+import ProductBadges from '@/components/product/ProductBadges.vue'
 import ProductPrice from '@/components/product/ProductPrice.vue'
 
 const props = defineProps({
@@ -12,18 +12,14 @@ const props = defineProps({
 const primaryImage = computed(
   () => props.product.images.find((i) => i.isPrimary) ?? props.product.images[0],
 )
-const isUsed = computed(() => props.product.condition === 'used')
-const isCollector = computed(() => props.product.condition === 'collector')
 </script>
 
 <template>
-  <RouterLink :to="`/produit/${product.slug}`" class="card">
+  <RouterLink :to="`/produit/${product.slug}`" class="card panel">
     <div class="card__media">
       <img :src="primaryImage.url" :alt="primaryImage.alt" loading="lazy" />
       <div class="card__overlay">
-        <BaseChip v-if="isUsed" variant="yellow" size="sm">Occasion</BaseChip>
-        <BaseChip v-if="isCollector" variant="ink" size="sm">Collector</BaseChip>
-        <BaseChip v-if="product.isImport" variant="outline" size="sm">Import JP</BaseChip>
+        <ProductBadges :product="product" />
       </div>
     </div>
     <div class="card__body">
@@ -39,17 +35,14 @@ const isCollector = computed(() => props.product.condition === 'collector')
 </template>
 
 <style scoped>
+/* fond + bordure + radius + ombre fournis par .panel */
 .card {
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: 0.6rem;
   overflow: hidden;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: var(--shadow-stamp);
 }
 .card:hover {
   transform: translate(-2px, -2px);

@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseField from '@/components/base/BaseField.vue'
+import PageHeader from '@/components/ui/PageHeader.vue'
 import { SHOP } from '@/config/shop'
 
 const form = ref({ name: '', email: '', message: '' })
@@ -14,7 +16,7 @@ function submit() {
 
 <template>
   <div class="page">
-    <h1 class="page__title text-stamp">Contact</h1>
+    <PageHeader title="Contact" size="lg" />
 
     <div class="grid">
       <section class="info">
@@ -47,21 +49,18 @@ function submit() {
         </p>
       </section>
 
-      <section class="form-wrap">
+      <section class="form-wrap panel">
         <h2>Un message ?</h2>
         <form v-if="!sent" class="form" @submit.prevent="submit">
-          <label>
-            <span>Nom</span>
-            <input v-model="form.name" type="text" required />
-          </label>
-          <label>
-            <span>Email</span>
-            <input v-model="form.email" type="email" required />
-          </label>
-          <label>
-            <span>Message</span>
-            <textarea v-model="form.message" rows="6" required></textarea>
-          </label>
+          <BaseField v-model="form.name" label="Nom" type="text" required />
+          <BaseField v-model="form.email" label="Email" type="email" required />
+          <BaseField
+            v-model="form.message"
+            label="Message"
+            type="textarea"
+            :rows="6"
+            required
+          />
           <BaseButton type="submit" size="lg" block>Envoyer</BaseButton>
           <p class="form__note">
             (Jalon 1 — le formulaire est factice, on branchera le back ensuite.)
@@ -81,10 +80,6 @@ function submit() {
   max-width: 1100px;
   margin: 0 auto;
   padding: 2.5rem 1.25rem 4rem;
-}
-.page__title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin: 0 0 2rem;
 }
 .grid {
   display: grid;
@@ -134,12 +129,9 @@ function submit() {
   padding: 0.2rem 0;
   border-bottom: 1px dashed var(--color-line);
 }
+/* surface fournie par .panel */
 .form-wrap {
-  background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
-  border-radius: 0.8rem;
   padding: 1.8rem;
-  box-shadow: var(--shadow-stamp);
 }
 .form-wrap h2 {
   font-family: var(--font-display);
@@ -150,23 +142,6 @@ function submit() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-.form label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-.form input,
-.form textarea {
-  padding: 0.6rem 0.8rem;
-  border: 2px solid var(--color-brand-ink);
-  border-radius: 0.4rem;
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  background: var(--color-brand-paper);
-  resize: vertical;
 }
 .form__note {
   margin: 0;
