@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseField from '@/components/base/BaseField.vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { SHOP } from '@/config/shop'
 
 const form = ref({ name: '', email: '', message: '' })
@@ -15,7 +16,7 @@ function submit() {
 </script>
 
 <template>
-  <div class="page">
+  <PageContainer width="medium">
     <PageHeader title="Contact" size="lg" />
 
     <div class="grid">
@@ -72,15 +73,10 @@ function submit() {
         </div>
       </section>
     </div>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
-}
 .grid {
   display: grid;
   grid-template-columns: 1fr;

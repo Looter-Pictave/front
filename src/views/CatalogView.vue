@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import FilterPanel from '@/components/catalog/FilterPanel.vue'
 import SortSelect from '@/components/catalog/SortSelect.vue'
 import ProductGrid from '@/components/product/ProductGrid.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { useCatalogStore } from '@/stores/catalog'
 
 const catalog = useCatalogStore()
@@ -53,7 +54,7 @@ function reset() {
 </script>
 
 <template>
-  <div class="page">
+  <PageContainer width="wide">
     <header class="page__header">
       <h1 class="text-stamp">Catalogue</h1>
       <p class="page__count">{{ results.length }} produit{{ results.length > 1 ? 's' : '' }}</p>
@@ -76,16 +77,10 @@ function reset() {
         <ProductGrid :products="results" />
       </div>
     </div>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.page {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
-  width: 100%;
-}
 .page__header {
   margin-bottom: 1.8rem;
   display: flex;

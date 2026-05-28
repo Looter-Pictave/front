@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
 import BaseChip from '@/components/base/BaseChip.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
@@ -65,7 +66,7 @@ const modules = [
 </script>
 
 <template>
-  <div class="admin">
+  <PageContainer width="wide">
     <header class="admin__head">
       <BaseChip variant="yellow" size="md">Pannel admin</BaseChip>
       <h1 class="admin__title text-stamp">Bienvenue {{ displayName }}</h1>
@@ -99,16 +100,10 @@ const modules = [
         </BaseChip>
       </article>
     </div>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.admin {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
-}
-
 .admin__head {
   margin-bottom: 2rem;
   display: flex;

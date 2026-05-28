@@ -5,6 +5,7 @@ import CartLine from '@/components/cart/CartLine.vue'
 import CartSummary from '@/components/cart/CartSummary.vue'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { useCartStore } from '@/stores/cart'
 
 const cart = useCartStore()
@@ -12,7 +13,7 @@ const { lines, isEmpty } = storeToRefs(cart)
 </script>
 
 <template>
-  <div class="page">
+  <PageContainer width="wide">
     <PageHeader title="Ton panier" size="lg" />
 
     <EmptyState v-if="isEmpty" message="Ton panier est vide.">
@@ -25,16 +26,10 @@ const { lines, isEmpty } = storeToRefs(cart)
       </section>
       <CartSummary />
     </div>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.page {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
-  width: 100%;
-}
 .page__layout {
   display: grid;
   grid-template-columns: 1fr;

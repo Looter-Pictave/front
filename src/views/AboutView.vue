@@ -2,10 +2,11 @@
 import BaseChip from '@/components/base/BaseChip.vue'
 import BaseBadge from '@/components/base/BaseBadge.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 </script>
 
 <template>
-  <div class="page">
+  <PageContainer width="medium">
     <section class="hero">
       <BaseChip variant="ink" size="md">La boutique · Poitiers</BaseChip>
       <h1 class="hero__title text-stamp">70 m² de pop culture</h1>
@@ -58,15 +59,10 @@ import BaseButton from '@/components/base/BaseButton.vue'
       <h2 class="text-stamp">On t'attend en boutique</h2>
       <BaseButton to="/contact" size="lg">Adresse &amp; horaires</BaseButton>
     </section>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
-}
 .hero {
   text-align: center;
   display: flex;

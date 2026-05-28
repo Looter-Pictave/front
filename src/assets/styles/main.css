@@ -30,12 +30,16 @@
   --color-ink-soft: rgb(0 0 0 / 0.65);
   --color-line: rgb(0 0 0 / 0.15);
 
-  /* ===== Breakpoints (référence — voir note plus bas) ===== */
-  /* CSS ne permet pas var() dans les @media, donc ces tokens servent de
-     DOCUMENTATION du système. Les media queries utilisent les valeurs en
-     dur correspondantes : --bp-sm = 640px, --bp-md = 900px. */
+  /* ===== Breakpoints (référence) ===== */
+  /* CSS ne permet pas var() dans les @media : ces tokens DOCUMENTENT le
+     système. Les media queries utilisent les valeurs en dur correspondantes.
+       --bp-sm 640px : passage 1 → 2 colonnes (formulaires, grilles internes)
+       --bp-md 880px : passage tablette → desktop (layouts de page principaux,
+                       sidebar compte, 2 colonnes contact/produit/panier)
+     Breakpoints "content-specific" tolérés hors système (quand un contenu
+     précis le justifie) : header 720/960, footer 720, carte boutique 760. */
   --bp-sm: 640px;
-  --bp-md: 900px;
+  --bp-md: 880px;
 
   /* ===== Typo ===== */
   --font-display: "Bungee", "Impact", system-ui, sans-serif;

@@ -8,6 +8,7 @@ import ProductGallery from '@/components/product/ProductGallery.vue'
 import ProductGrid from '@/components/product/ProductGrid.vue'
 import ProductPrice from '@/components/product/ProductPrice.vue'
 import StockBadge from '@/components/product/StockBadge.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { useCatalogStore } from '@/stores/catalog'
 import { useCartStore } from '@/stores/cart'
 import { useUiStore } from '@/stores/ui'
@@ -42,7 +43,7 @@ function addToCart() {
 </script>
 
 <template>
-  <div v-if="product" class="page">
+  <PageContainer v-if="product" width="wide">
     <nav class="page__breadcrumb" aria-label="Fil d'Ariane">
       <RouterLink to="/">Accueil</RouterLink>
       <span>/</span>
@@ -95,7 +96,7 @@ function addToCart() {
       <h2 class="related__title text-stamp">À découvrir aussi</h2>
       <ProductGrid :products="related" />
     </section>
-  </div>
+  </PageContainer>
 
   <div v-else class="missing">
     <h1>Produit introuvable</h1>
@@ -105,12 +106,6 @@ function addToCart() {
 </template>
 
 <style scoped>
-.page {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1.8rem 1.25rem 4rem;
-  width: 100%;
-}
 .page__breadcrumb {
   font-size: 0.8rem;
   color: var(--color-ink-muted);

@@ -4,6 +4,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseField from '@/components/base/BaseField.vue'
 import FormMessage from '@/components/ui/FormMessage.vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
@@ -52,7 +53,7 @@ async function submit() {
 </script>
 
 <template>
-  <div class="page">
+  <PageContainer width="narrow">
     <div class="auth-card panel panel--lg">
       <h1 class="auth-card__title text-stamp">Créer un compte</h1>
       <p class="auth-card__lead">
@@ -138,15 +139,10 @@ async function submit() {
         </p>
       </form>
     </div>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.page {
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 3rem 1.25rem 4rem;
-}
 /* surface fournie par .panel.panel--lg */
 .auth-card {
   padding: 2rem 1.8rem;
@@ -172,7 +168,7 @@ async function submit() {
   grid-template-columns: 1fr;
   gap: 1rem;
 }
-@media (min-width: 480px) {
+@media (min-width: 640px) {
   .form__row {
     grid-template-columns: 1fr 1fr;
   }

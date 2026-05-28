@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import PageContainer from '@/components/ui/PageContainer.vue'
 import { SHOP, isTodo, formattedAddress } from '@/config/shop'
 
 /**
@@ -27,7 +28,7 @@ const hasMissingInfo = computed(() => {
 </script>
 
 <template>
-  <div class="page">
+  <PageContainer width="text">
     <h1 class="page__title text-stamp">Mentions légales</h1>
 
     <p class="page__lead">
@@ -178,15 +179,10 @@ const hasMissingInfo = computed(() => {
         compétence exclusive des tribunaux français.
       </p>
     </section>
-  </div>
+  </PageContainer>
 </template>
 
 <style scoped>
-.page {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
-}
 .page__title {
   font-size: clamp(2rem, 5vw, 3rem);
   margin: 0 0 1.5rem;
