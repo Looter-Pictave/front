@@ -18,10 +18,6 @@
   --color-stock-low: #ef6c00;
   --color-stock-out: #c62828;
 
-  /* Background du body (équivalent à paper en light, mais une var
-     séparée pour pouvoir le rendre PLUS SOMBRE que les cards en dark). */
-  --color-page-bg: #ffffff;
-
   /* Textes secondaires sur fond clair — 3 niveaux d'opacité noir.
      On harmonise les valeurs proches (0.5/0.55/0.6 → muted, 0.1/0.15 → line). */
   --color-ink-muted: rgb(0 0 0 / 0.55);
@@ -46,65 +42,23 @@
   --radius-chip: 9999px;
 }
 
-/* ----------------------------------------------------------------------------
- * Dark mode — vrai dark gris neutre (Discord / Vercel / GitHub style)
- * + accents jaunes pour l'identité Looter.
- *
- * Philosophie :
- *   - Fond gris neutre PROFOND (pas sépia, pas bleuté)
- *   - Cards "elevated" 1 cran plus claires (hiérarchie visuelle)
- *   - Texte blanc cassé neutre #e4e4e7
- *   - Header RESTE JAUNE (identité forte qu'on n'éteint pas)
- *   - Ombres "stamp" → passent en JAUNE BRAND offset
- *     -> sur fond gris foncé, ça crée un effet "néon" identitaire
- *     -> l'esprit sticker est préservé mais visuellement boosté
- *
- * Palette directement inspirée de Tailwind `zinc` (Tailwind dark mode
- * de référence) : neutre, lisible, élégant, pas chargé.
- * -------------------------------------------------------------------------- */
-[data-theme="dark"] {
-  --color-brand-ink: #e4e4e7;       /* zinc-200 : texte clair neutre */
-  --color-brand-paper: #27272a;     /* zinc-800 : surface card */
-  --color-brand-cream: #3f3f46;     /* zinc-700 : surface elevated++ */
-  --color-page-bg: #18181b;         /* zinc-900 : fond de page */
-
-  /* Textes secondaires : opacités blanches NEUTRES (pas cream chaud) */
-  --color-ink-muted: rgb(255 255 255 / 0.55);
-  --color-ink-soft: rgb(255 255 255 / 0.78);
-  --color-line: rgb(255 255 255 / 0.1);
-
-  /* Ombres "stamp" en JAUNE BRAND : sur fond gris foncé, l'offset jaune
-     crée un effet "néon" qui pop visuellement et garde l'identité Looter.
-     L'esprit sticker/tampon n'est pas perdu — il est juste réinterprété
-     pour l'esthétique dark. */
-  --shadow-stamp-sm: 2px 2px 0 0 var(--color-brand-yellow);
-  --shadow-stamp: 4px 4px 0 0 var(--color-brand-yellow);
-  --shadow-stamp-lg: 6px 6px 0 0 var(--color-brand-yellow);
-  /* Les ombres yellow originales (utilisées par BaseButton secondary)
-     restent telles quelles. */
-}
-
 /* Base */
 html {
-  background: var(--color-page-bg);
+  background: var(--color-brand-paper);
   color: var(--color-brand-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  /* Transition douce quand on toggle le thème */
-  transition: background 0.25s ease, color 0.25s ease;
 }
 
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--color-page-bg);
-  transition: background 0.25s ease;
 }
 
 /* Selection */
 ::selection {
   background: var(--color-brand-yellow);
-  color: #1d1d1b;
+  color: var(--color-brand-ink);
 }
 
 /* Petit utilitaire pour le drop-shadow jaune façon logo */

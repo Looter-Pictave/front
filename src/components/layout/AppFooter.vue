@@ -194,21 +194,4 @@ const year = new Date().getFullYear()
   margin: 0 0.4rem;
   opacity: 0.5;
 }
-
-/* ===== Patch dark mode =====
-   Footer noir neutre en dark (#0a0a0b = zinc-950, plus sombre que le
-   body #18181b pour bien se distinguer). Le bandeau zigzag jaune au-dessus
-   reste jaune (token brand fixe) et assure la transition page → footer. */
-[data-theme="dark"] .footer {
-  background: #0a0a0b;
-  color: #e4e4e7;
-}
-[data-theme="dark"] .footer__list a,
-[data-theme="dark"] .footer__col a {
-  color: #e4e4e7;
-}
-[data-theme="dark"] .footer__list a:hover,
-[data-theme="dark"] .footer__col a:hover {
-  color: var(--color-brand-yellow);
-}
 </style>

@@ -5,7 +5,6 @@ import { RouterLink, useRouter } from 'vue-router'
 
 import BrandLogo from '@/components/base/BrandLogo.vue'
 import BaseChip from '@/components/base/BaseChip.vue'
-import ThemeToggle from '@/components/base/ThemeToggle.vue'
 import { useCartStore } from '@/stores/cart'
 import { useUiStore } from '@/stores/ui'
 import { useAuthStore } from '@/stores/auth'
@@ -71,9 +70,6 @@ async function handleLogout() {
       </nav>
 
       <div class="header__actions">
-        <!-- Toggle thème : petit bouton lune/soleil, toujours visible -->
-        <ThemeToggle />
-
         <!-- Bouton Connexion si non authentifié -->
         <RouterLink
           v-if="!isAuthenticated"
@@ -418,48 +414,4 @@ async function handleLogout() {
   background: var(--color-line);
   margin: 0.3rem 0;
 }
-
-/* ===== Patch dark mode =====
-   Le header reste JAUNE en dark (l'âme de la boutique). On force les
-   éléments qui utilisaient var(--color-brand-ink) à garder leur noir
-   d'origine pour rester lisibles sur jaune (le swap des vars les
-   transformerait en cream invisible). */
-[data-theme="dark"] .header {
-  color: #1d1d1b;
-  border-bottom-color: #1d1d1b;
-}
-[data-theme="dark"] .header__name,
-[data-theme="dark"] .header__tagline,
-[data-theme="dark"] .header__link {
-  color: #1d1d1b;
-}
-[data-theme="dark"] .header__link:hover,
-[data-theme="dark"] .header__link.router-link-active {
-  border-bottom-color: #1d1d1b;
-}
-[data-theme="dark"] .header__login {
-  border-color: #1d1d1b;
-  color: #1d1d1b;
-}
-[data-theme="dark"] .header__login:hover {
-  background: #1d1d1b;
-  color: var(--color-brand-yellow);
-}
-[data-theme="dark"] .header__cart {
-  background: #1d1d1b;
-  color: #ffffff;
-}
-[data-theme="dark"] .header__cart:hover {
-  background: #000;
-}
-[data-theme="dark"] .header__user-trigger {
-  background: #1d1d1b;
-  color: var(--color-brand-yellow);
-}
-[data-theme="dark"] .header__user-avatar {
-  background: var(--color-brand-yellow);
-  color: #1d1d1b;
-}
-/* Le dropdown user (menu déroulant) utilise --color-brand-paper qui devient
-   sépia en dark → automatiquement chaleureux, pas besoin de patch. */
 </style>
