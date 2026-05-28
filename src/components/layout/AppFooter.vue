@@ -10,10 +10,14 @@ const year = new Date().getFullYear()
   <footer class="footer">
     <div class="footer__decor" aria-hidden="true">
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-        <!-- Ciel jaune DANS le svg (au lieu d'un background CSS) : ainsi tout
-             débordement sous-pixel en bas montre le noir du footer (invisible)
-             et non plus un liseré jaune. -->
-        <rect x="0" y="0" width="1440" height="120" fill="#ffdd00" />
+        <!-- Ciel jaune : limité au HAUT (y=0 à 100). Les montagnes les plus
+             basses sont à y=90, donc 100 couvre tout le ciel visible SANS
+             descendre jusqu'au bord inférieur (y=120). Ainsi, au bas du SVG,
+             il n'y a plus aucun jaune derrière le tracé noir : l'anti-aliasing
+             du bord inférieur des montagnes se fond dans le noir du footer
+             (et non plus dans un liseré jaune sur les pages où le footer tombe
+             à une position fractionnaire de pixel). -->
+        <rect x="0" y="0" width="1440" height="100" fill="#ffdd00" />
         <path
           d="M0,120 L0,80 Q60,40 120,70 T240,60 L300,30 L360,80 L420,45 L470,90 L520,40 L590,75 L660,55 L720,90 L780,30 L840,70 L900,50 L970,85 L1040,40 L1100,80 L1160,55 L1220,90 L1280,50 L1340,75 L1400,45 L1440,80 L1440,120 Z"
           fill="#1d1d1b"
