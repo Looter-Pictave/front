@@ -10,6 +10,10 @@ const year = new Date().getFullYear()
   <footer class="footer">
     <div class="footer__decor" aria-hidden="true">
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <!-- Ciel jaune DANS le svg (au lieu d'un background CSS) : ainsi tout
+             débordement sous-pixel en bas montre le noir du footer (invisible)
+             et non plus un liseré jaune. -->
+        <rect x="0" y="0" width="1440" height="120" fill="#ffdd00" />
         <path
           d="M0,120 L0,80 Q60,40 120,70 T240,60 L300,30 L360,80 L420,45 L470,90 L520,40 L590,75 L660,55 L720,90 L780,30 L840,70 L900,50 L970,85 L1040,40 L1100,80 L1160,55 L1220,90 L1280,50 L1340,75 L1400,45 L1440,80 L1440,120 Z"
           fill="#1d1d1b"
@@ -91,11 +95,11 @@ const year = new Date().getFullYear()
   margin-top: auto;
   position: relative;
 }
-/* Fond jaune : c'est lui qui fait ressortir nettement les montagnes noires
-   au-dessus du footer (sans lui, montagnes noires sur footer noir = elles
-   se fondent et disparaissent visuellement). */
+/* Fond transparent : le jaune du "ciel" est désormais un <rect> à l'intérieur
+   du SVG. Du coup aucun liseré jaune ne peut déborder en bas (un éventuel
+   pixel sous-pixel montre le noir du footer derrière = invisible). */
 .footer__decor {
-  background: var(--color-brand-yellow);
+  background: transparent;
   line-height: 0;
 }
 .footer__decor svg {
