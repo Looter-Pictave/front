@@ -47,42 +47,45 @@
 }
 
 /* ----------------------------------------------------------------------------
- * Dark mode — palette "sober" inspirée Notion / Linear / Vercel.
+ * Dark mode — "Boutique la nuit" (warm dark, identité Looter conservée).
  *
- * Philosophie :
- *   - Fond de page TRÈS sombre (#15171a), proche du noir mais bleuté
- *   - Cards "elevated" : un cran plus claires que la page (#1f2125)
- *     -> la hiérarchie visuelle vient de l'ÉLÉVATION (différence de fond),
- *        pas de bordures épaisses ni d'ombres
- *   - Surfaces "++ elevated" (sections alt, accents) : encore un cran (#2a2c30)
- *   - Texte principal : blanc cassé neutre (#e8e8e8), pas cream chaud
- *   - SUPPRESSION des ombres "stamp" : un offset clair sur fond sombre fait
- *     un halo disgracieux. On compense par la hiérarchie d'élévation.
- *   - Le jaune brand reste comme ACCENT (CTAs, hover, badges) — pas comme
- *     fond massif.
+ * Philosophie : on n'essaie pas de transformer le site en interface tech
+ * sombre. On baisse juste la lumière. La boutique reste chaude, jaune,
+ * tampon. Comme passer devant une vitrine pop culture le soir : tu vois
+ * encore tout, c'est juste la nuit.
  *
- * Header et footer ont leurs propres patches dans leurs CSS scoped pour
- * passer en mode sombre cohérent (cf. AppHeader.vue / AppFooter.vue).
+ * Palette :
+ *   - Fond page : sépia très foncé #1a1410 (chaud, pas gris bleuté)
+ *   - Surface cards : #241e18 (sépia + un cran de lumière)
+ *   - Surface alt : #2f261e (sections--alt encore plus chaudes)
+ *   - Texte : cream brand #fff8d6 — cohérent, identitaire
+ *   - Ombres "stamp" : restent ! Mais en cream au lieu de noir.
+ *     L'effet sticker/tampon est préservé, juste inversé.
+ *   - Bordures (var(--color-brand-ink) swap en cream) : restent marquées,
+ *     fidèles au style "tampon Looter" même en dark.
+ *
+ * Header : RESTE JAUNE (cf. patches dans AppHeader.vue). C'est l'âme.
+ * Footer : noir warm profond (cf. patches dans AppFooter.vue).
  * -------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --color-brand-ink: #e8e8e8;       /* texte principal : blanc cassé neutre */
-  --color-brand-paper: #1f2125;     /* surface elevated (cards, formulaires) */
-  --color-brand-cream: #2a2c30;     /* surface elevated++ (sections alt) */
-  --color-page-bg: #15171a;         /* fond de page (PLUS sombre que paper) */
+  --color-brand-ink: #fff8d6;       /* "encre" devient cream brand */
+  --color-brand-paper: #241e18;     /* surface card sépia */
+  --color-brand-cream: #2f261e;     /* surface alt warm elevated */
+  --color-page-bg: #1a1410;         /* fond page sépia très foncé */
 
-  /* Textes secondaires : opacités blanches */
-  --color-ink-muted: rgb(255 255 255 / 0.55);
-  --color-ink-soft: rgb(255 255 255 / 0.78);
-  --color-line: rgb(255 255 255 / 0.1);
+  /* Textes secondaires : opacités CREAM (pas blanc neutre), reste chaud */
+  --color-ink-muted: rgb(255 248 214 / 0.6);
+  --color-ink-soft: rgb(255 248 214 / 0.8);
+  --color-line: rgb(255 248 214 / 0.15);
 
-  /* Plus d'ombres "stamp" en dark — l'élévation des fonds suffit à
-     hiérarchiser. Les composants qui s'appuyaient sur la shadow gardent
-     juste leur bordure (qui devient #e8e8e8 = très subtile sur #1f2125). */
-  --shadow-stamp-sm: none;
-  --shadow-stamp: none;
-  --shadow-stamp-lg: none;
-  --shadow-stamp-yellow: none;
-  --shadow-stamp-yellow-sm: none;
+  /* Ombres "stamp" PRÉSERVÉES — c'est la signature DA. Juste inversées :
+     offset cream sur surface sépia au lieu d'offset noir sur surface blanche.
+     Effet sticker/tampon conservé en dark. */
+  --shadow-stamp-sm: 2px 2px 0 0 #fff8d6;
+  --shadow-stamp: 4px 4px 0 0 #fff8d6;
+  --shadow-stamp-lg: 6px 6px 0 0 #fff8d6;
+  --shadow-stamp-yellow: 4px 4px 0 0 var(--color-brand-yellow);
+  --shadow-stamp-yellow-sm: 2px 2px 0 0 var(--color-brand-yellow);
 }
 
 /* Base */

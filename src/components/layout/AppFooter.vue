@@ -196,30 +196,20 @@ const year = new Date().getFullYear()
 }
 
 /* ===== Patch dark mode =====
-   Le footer reste noir mais on l'assombrit légèrement (#0d0e10) pour qu'il
-   se distingue du fond de page sombre (#15171a). Sans ce patch, var(--color-
-   brand-ink) swapperait en cream et le footer perdrait son contraste. */
+   Footer noir warm en dark (#0d0907 = noir sépia profond, cohérent avec
+   la palette warm dark). Plus sombre que le fond de page (#1a1410) pour
+   bien se distinguer. Le bandeau zigzag jaune au-dessus reste jaune
+   (token brand fixe) et assure la transition page -> footer. */
 [data-theme="dark"] .footer {
-  background: #0d0e10;
-  color: #e8e8e8;
+  background: #0d0907;
+  color: #fff8d6;
 }
 [data-theme="dark"] .footer__list a,
 [data-theme="dark"] .footer__col a {
-  color: #e8e8e8;
+  color: #fff8d6;
 }
 [data-theme="dark"] .footer__list a:hover,
 [data-theme="dark"] .footer__col a:hover {
   color: var(--color-brand-yellow);
 }
-[data-theme="dark"] .footer__socials a {
-  border-color: var(--color-brand-yellow);
-  color: var(--color-brand-yellow);
-}
-[data-theme="dark"] .footer__socials a:hover {
-  background: var(--color-brand-yellow);
-  color: #1d1d1b;
-}
-/* Le bandeau zigzag jaune au-dessus du footer reste jaune dans tous les cas
-   (token brand fixe), c'est lui qui assure la transition visuelle entre la
-   page (claire ou sombre) et le footer noir. */
 </style>

@@ -420,35 +420,46 @@ async function handleLogout() {
 }
 
 /* ===== Patch dark mode =====
-   En dark mode, le header passe en CHARCOAL au lieu de rester jaune
-   (le jaune massif au-dessus d'une page sombre est trop agressif). Les
-   CTAs (cart, user) deviennent jaune brand → l'accent identitaire reste
-   présent mais ponctuel. */
+   Le header reste JAUNE en dark (l'âme de la boutique). On force les
+   éléments qui utilisaient var(--color-brand-ink) à garder leur noir
+   d'origine pour rester lisibles sur jaune (le swap des vars les
+   transformerait en cream invisible). */
 [data-theme="dark"] .header {
-  background: var(--color-brand-paper); /* #1f2125 elevated */
-  border-bottom-color: var(--color-line);
+  color: #1d1d1b;
+  border-bottom-color: #1d1d1b;
 }
-[data-theme="dark"] .header__cart {
-  background: var(--color-brand-yellow);
+[data-theme="dark"] .header__name,
+[data-theme="dark"] .header__tagline,
+[data-theme="dark"] .header__link {
   color: #1d1d1b;
 }
-[data-theme="dark"] .header__cart:hover {
-  background: var(--color-brand-yellow-dark);
+[data-theme="dark"] .header__link:hover,
+[data-theme="dark"] .header__link.router-link-active {
+  border-bottom-color: #1d1d1b;
 }
-[data-theme="dark"] .header__user-trigger {
-  background: var(--color-brand-yellow);
+[data-theme="dark"] .header__login {
+  border-color: #1d1d1b;
   color: #1d1d1b;
 }
-[data-theme="dark"] .header__user-trigger:hover {
-  background: var(--color-brand-yellow-dark);
-}
-[data-theme="dark"] .header__user-avatar {
+[data-theme="dark"] .header__login:hover {
   background: #1d1d1b;
   color: var(--color-brand-yellow);
 }
-[data-theme="dark"] .header__login:hover {
+[data-theme="dark"] .header__cart {
+  background: #1d1d1b;
+  color: #ffffff;
+}
+[data-theme="dark"] .header__cart:hover {
+  background: #000;
+}
+[data-theme="dark"] .header__user-trigger {
+  background: #1d1d1b;
+  color: var(--color-brand-yellow);
+}
+[data-theme="dark"] .header__user-avatar {
   background: var(--color-brand-yellow);
   color: #1d1d1b;
-  border-color: var(--color-brand-yellow);
 }
+/* Le dropdown user (menu déroulant) utilise --color-brand-paper qui devient
+   sépia en dark → automatiquement chaleureux, pas besoin de patch. */
 </style>
