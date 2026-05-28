@@ -47,45 +47,41 @@
 }
 
 /* ----------------------------------------------------------------------------
- * Dark mode — "Boutique la nuit" (warm dark, identité Looter conservée).
+ * Dark mode — vrai dark gris neutre (Discord / Vercel / GitHub style)
+ * + accents jaunes pour l'identité Looter.
  *
- * Philosophie : on n'essaie pas de transformer le site en interface tech
- * sombre. On baisse juste la lumière. La boutique reste chaude, jaune,
- * tampon. Comme passer devant une vitrine pop culture le soir : tu vois
- * encore tout, c'est juste la nuit.
+ * Philosophie :
+ *   - Fond gris neutre PROFOND (pas sépia, pas bleuté)
+ *   - Cards "elevated" 1 cran plus claires (hiérarchie visuelle)
+ *   - Texte blanc cassé neutre #e4e4e7
+ *   - Header RESTE JAUNE (identité forte qu'on n'éteint pas)
+ *   - Ombres "stamp" → passent en JAUNE BRAND offset
+ *     -> sur fond gris foncé, ça crée un effet "néon" identitaire
+ *     -> l'esprit sticker est préservé mais visuellement boosté
  *
- * Palette :
- *   - Fond page : sépia très foncé #1a1410 (chaud, pas gris bleuté)
- *   - Surface cards : #241e18 (sépia + un cran de lumière)
- *   - Surface alt : #2f261e (sections--alt encore plus chaudes)
- *   - Texte : cream brand #fff8d6 — cohérent, identitaire
- *   - Ombres "stamp" : restent ! Mais en cream au lieu de noir.
- *     L'effet sticker/tampon est préservé, juste inversé.
- *   - Bordures (var(--color-brand-ink) swap en cream) : restent marquées,
- *     fidèles au style "tampon Looter" même en dark.
- *
- * Header : RESTE JAUNE (cf. patches dans AppHeader.vue). C'est l'âme.
- * Footer : noir warm profond (cf. patches dans AppFooter.vue).
+ * Palette directement inspirée de Tailwind `zinc` (Tailwind dark mode
+ * de référence) : neutre, lisible, élégant, pas chargé.
  * -------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --color-brand-ink: #fff8d6;       /* "encre" devient cream brand */
-  --color-brand-paper: #241e18;     /* surface card sépia */
-  --color-brand-cream: #2f261e;     /* surface alt warm elevated */
-  --color-page-bg: #1a1410;         /* fond page sépia très foncé */
+  --color-brand-ink: #e4e4e7;       /* zinc-200 : texte clair neutre */
+  --color-brand-paper: #27272a;     /* zinc-800 : surface card */
+  --color-brand-cream: #3f3f46;     /* zinc-700 : surface elevated++ */
+  --color-page-bg: #18181b;         /* zinc-900 : fond de page */
 
-  /* Textes secondaires : opacités CREAM (pas blanc neutre), reste chaud */
-  --color-ink-muted: rgb(255 248 214 / 0.6);
-  --color-ink-soft: rgb(255 248 214 / 0.8);
-  --color-line: rgb(255 248 214 / 0.15);
+  /* Textes secondaires : opacités blanches NEUTRES (pas cream chaud) */
+  --color-ink-muted: rgb(255 255 255 / 0.55);
+  --color-ink-soft: rgb(255 255 255 / 0.78);
+  --color-line: rgb(255 255 255 / 0.1);
 
-  /* Ombres "stamp" PRÉSERVÉES — c'est la signature DA. Juste inversées :
-     offset cream sur surface sépia au lieu d'offset noir sur surface blanche.
-     Effet sticker/tampon conservé en dark. */
-  --shadow-stamp-sm: 2px 2px 0 0 #fff8d6;
-  --shadow-stamp: 4px 4px 0 0 #fff8d6;
-  --shadow-stamp-lg: 6px 6px 0 0 #fff8d6;
-  --shadow-stamp-yellow: 4px 4px 0 0 var(--color-brand-yellow);
-  --shadow-stamp-yellow-sm: 2px 2px 0 0 var(--color-brand-yellow);
+  /* Ombres "stamp" en JAUNE BRAND : sur fond gris foncé, l'offset jaune
+     crée un effet "néon" qui pop visuellement et garde l'identité Looter.
+     L'esprit sticker/tampon n'est pas perdu — il est juste réinterprété
+     pour l'esthétique dark. */
+  --shadow-stamp-sm: 2px 2px 0 0 var(--color-brand-yellow);
+  --shadow-stamp: 4px 4px 0 0 var(--color-brand-yellow);
+  --shadow-stamp-lg: 6px 6px 0 0 var(--color-brand-yellow);
+  /* Les ombres yellow originales (utilisées par BaseButton secondary)
+     restent telles quelles. */
 }
 
 /* Base */
