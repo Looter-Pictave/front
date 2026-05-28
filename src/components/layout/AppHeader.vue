@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink, useRouter, useRoute } from 'vue-router'
 
 import BrandLogo from '@/components/base/BrandLogo.vue'
 import BaseChip from '@/components/base/BaseChip.vue'
@@ -10,30 +10,56 @@ import { useUiStore } from '@/stores/ui'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const route = useRoute()
 const cart = useCartStore()
 const ui = useUiStore()
 const auth = useAuthStore()
 const { count } = storeToRefs(cart)
 const { isAuthenticated, isAdmin, displayName, currentUser } = storeToRefs(auth)
 
-// Dropdown user : ouvert/fermé + fermeture sur click outside et Echap
-const userMenuOpen = ref(false)
-const userMenuRef = ref(null)
+// Ref sur tout le header : sert à détecter les clics à l'extérieur pour
+// fermer les deux menus (dropdown user + menu burger mobile).
+const headerRef = ref(null)
 
+// Dropdown user (authentifié)
+const userMenuOpen = ref(false)
 function toggleUserMenu() {
   userMenuOpen.value = !userMenuOpen.value
 }
 function closeUserMenu() {
   userMenuOpen.value = false
 }
+
+// Menu burger (mobile, < 960px)
+const mobileMenuOpen = ref(false)
+function toggleMobileMenu() {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+function closeMobileMenu() {
+  mobileMenuOpen.value = false
+}
+
 function handleClickOutside(e) {
-  if (userMenuRef.value && !userMenuRef.value.contains(e.target)) {
+  if (headerRef.value && !headerRef.value.contains(e.target)) {
     closeUserMenu()
+    closeMobileMenu()
   }
 }
 function handleEsc(e) {
-  if (e.key === 'Escape') closeUserMenu()
+  if (e.key === 'Escape') {
+    closeUserMenu()
+    closeMobileMenu()
+  }
 }
+
+// Ferme les deux menus à chaque changement de route.
+watch(
+  () => route.fullPath,
+  () => {
+    closeUserMenu()
+    closeMobileMenu()
+  },
+)
 
 onMounted(() => {
   document.addEventListener('mousedown', handleClickOutside)
@@ -52,8 +78,27 @@ async function handleLogout() {
 </script>
 
 <template>
-  <header class="header">
+  <header ref="headerRef" class="header">
     <div class="header__inner">
+      <!-- Burger : visible uniquement < 960px (où la nav desktop est cachée) -->
+      <button
+        type="button"
+        class="header__burger"
+        :aria-expanded="mobileMenuOpen"
+        aria-label="Ouvrir le menu de navigation"
+        @click="toggleMobileMenu"
+      >
+        <svg v-if="!mobileMenuOpen" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <svg v-else viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="6" y1="18" x2="18" y2="6" />
+        </svg>
+      </button>
+
       <RouterLink to="/" class="header__brand" aria-label="Accueil Looter Pictave">
         <BrandLogo :size="56" />
         <div class="header__wordmark">
@@ -176,6 +221,14 @@ async function handleLogout() {
         </button>
       </div>
     </div>
+
+    <!-- Menu déroulant mobile (< 960px), ouvert via le burger -->
+    <nav v-if="mobileMenuOpen" class="header__mobile" aria-label="Navigation mobile">
+      <RouterLink to="/" class="header__mobile-link" @click="closeMobileMenu">Accueil</RouterLink>
+      <RouterLink to="/catalogue" class="header__mobile-link" @click="closeMobileMenu">Catalogue</RouterLink>
+      <RouterLink to="/a-propos" class="header__mobile-link" @click="closeMobileMenu">La boutique</RouterLink>
+      <RouterLink to="/contact" class="header__mobile-link" @click="closeMobileMenu">Contact</RouterLink>
+    </nav>
   </header>
 </template>
 
@@ -195,6 +248,31 @@ async function handleLogout() {
   align-items: center;
   gap: 1.5rem;
 }
+/* ===== Burger mobile ===== */
+.header__burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: transparent;
+  border: 2px solid var(--color-brand-ink);
+  border-radius: var(--radius-sm);
+  color: var(--color-brand-ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+.header__burger:hover {
+  background: rgb(0 0 0 / 0.08);
+}
+@media (min-width: 960px) {
+  .header__burger {
+    display: none;
+  }
+}
+
 .header__brand {
   display: flex;
   align-items: center;
@@ -294,6 +372,37 @@ async function handleLogout() {
   .header__nav {
     display: flex;
   }
+}
+
+/* ===== Menu déroulant mobile ===== */
+.header__mobile {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--color-brand-ink);
+}
+@media (min-width: 960px) {
+  .header__mobile {
+    display: none;
+  }
+}
+.header__mobile-link {
+  padding: 0.95rem 1.25rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+  color: var(--color-brand-ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgb(0 0 0 / 0.12);
+}
+.header__mobile-link:last-child {
+  border-bottom: none;
+}
+.header__mobile-link:active,
+.header__mobile-link.router-link-active {
+  background: var(--color-brand-ink);
+  color: var(--color-brand-yellow);
 }
 
 /* ===== Bouton Connexion (non authentifié) ===== */
