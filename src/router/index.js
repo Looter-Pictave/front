@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 /**
  * Eager imports volontaires (pas de lazy `() => import(...)`).
@@ -151,13 +152,11 @@ const router = createRouter({
 /**
  * Guard global : protège les routes avec meta.requiresAuth / meta.requiresAdmin.
  *
- * On ne peut PAS importer useAuthStore au top du fichier (Pinia n'est pas
- * encore monté à ce moment-là), il faut l'importer DANS la fonction de guard,
- * appelée après que main.js ait fait `app.use(pinia)`.
+ * useAuthStore est importé statiquement (le module ne fait que `defineStore`,
+ * il n'instancie rien). On n'APPELLE useAuthStore() qu'ici, à l'exécution du
+ * guard — donc après que main.js ait monté Pinia. Pas de souci d'ordre.
  */
-router.beforeEach(async (to) => {
-  // Import dynamique : Pinia est forcément initialisé quand un guard tire.
-  const { useAuthStore } = await import('@/stores/auth')
+router.beforeEach((to) => {
   const auth = useAuthStore()
 
   if (to.meta?.requiresAuth && !auth.isAuthenticated) {
