@@ -120,8 +120,15 @@ async function handleLogout() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  position: sticky;
-  top: 90px;
+}
+/* Sticky uniquement en colonne latérale (desktop) : sur mobile la sidebar
+   est empilée au-dessus du contenu, un sticky la ferait flotter par-dessus
+   les commandes au scroll. */
+@media (min-width: 880px) {
+  .account__side {
+    position: sticky;
+    top: 90px;
+  }
 }
 
 .account__hello {
