@@ -1,0 +1,15 @@
+{
+  // Nom du projet sur Cloudflare (minuscules + tirets uniquement).
+  "name": "looter-pictave",
+  // Date de compatibilité du runtime Workers (obligatoire).
+  "compatibility_date": "2026-05-29",
+  // Déploiement "static assets" : aucun script Worker, on sert juste le
+  // dossier de build de Vite.
+  "assets": {
+    "directory": "./dist",
+    // SPA : sert index.html pour toute route inconnue. Indispensable car on
+    // utilise le history mode de vue-router — sans ça, un accès direct ou un
+    // refresh sur /catalogue, /mon-compte, etc. renverrait une 404.
+    "not_found_handling": "single-page-application"
+  }
+}
