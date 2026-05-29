@@ -30,6 +30,12 @@
   --color-ink-soft: rgb(0 0 0 / 0.65);
   --color-line: rgb(0 0 0 / 0.15);
 
+  /* Surfaces : fond de page (séparé de paper pour pouvoir être plus sombre
+     que les cartes en dark) + couleur de bordure des .panel (ink en light,
+     blanc subtil en dark). */
+  --color-page-bg: #ffffff;
+  --panel-border: var(--color-brand-ink);
+
   /* ===== Breakpoints (référence) ===== */
   /* CSS ne permet pas var() dans les @media : ces tokens DOCUMENTENT le
      système. Les media queries utilisent les valeurs en dur correspondantes.
@@ -59,9 +65,45 @@
   --radius-chip: 9999px;
 }
 
+/* ----------------------------------------------------------------------------
+ * Dark mode — activé par [data-theme="dark"] sur <html>.
+ * Header reste jaune (identité), corps gris-neutre sombre, texte blanc cassé,
+ * bordures subtiles, pas d'ombre stamp (élévation par le fond). Accents jaunes.
+ *
+ * Sélecteur :root[data-theme="dark"] (spécificité 0,2,0) pour battre les
+ * tokens @theme de Tailwind posés sur :root. PAS de transition sur html :
+ * Chromium ne re-résout pas une propriété var() qui transitionne quand seule
+ * la variable change (bug rencontré → texte restait sombre).
+ * -------------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  --color-brand-ink: #ededed;        /* texte principal : blanc cassé neutre */
+  --color-brand-paper: #222228;      /* surface carte (clairement plus claire que la page) */
+  --color-brand-cream: #2c2c33;      /* surface alt */
+  --color-page-bg: #131316;          /* fond de page (plus sombre -> élévation lisible) */
+
+  --color-ink-muted: rgb(255 255 255 / 0.55);
+  --color-ink-soft: rgb(255 255 255 / 0.78);
+  --color-line: rgb(255 255 255 / 0.1);
+
+  /* Plus de liseré BLANC autour des cartes (faisait étrange sur fond sombre) :
+     bordure transparente, la séparation vient de l'élévation (carte plus
+     claire) + d'une ombre douce SOMBRE (pas de halo blanc). */
+  --panel-border: transparent;
+  --shadow-stamp-sm: 0 1px 4px rgb(0 0 0 / 0.5);
+  --shadow-stamp: 0 3px 10px rgb(0 0 0 / 0.5);
+  --shadow-stamp-lg: 0 6px 20px rgb(0 0 0 / 0.55);
+}
+
+/* Titres "stamp" en dark : JAUNE brand (au lieu de blanc + ombre jaune qui
+   faisait étrange) + ombre sombre décalée pour garder l'effet tampon. */
+:root[data-theme="dark"] .text-stamp {
+  color: var(--color-brand-yellow);
+  text-shadow: 2px 2px 0 rgb(0 0 0 / 0.55);
+}
+
 /* Base */
 html {
-  background: var(--color-brand-paper);
+  background: var(--color-page-bg);
   color: var(--color-brand-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -70,6 +112,7 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
+  background: var(--color-page-bg);
 }
 
 /* Selection */
@@ -99,7 +142,7 @@ body {
  * -------------------------------------------------------------------------- */
 .panel {
   background: var(--color-brand-paper);
-  border: 2px solid var(--color-brand-ink);
+  border: 2px solid var(--panel-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-stamp);
 }

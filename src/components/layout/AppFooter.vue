@@ -205,4 +205,20 @@ const year = new Date().getFullYear()
   margin: 0 0.4rem;
   opacity: 0.5;
 }
+
+/* ===== Patch dark mode : le footer reste sombre (sinon var(--color-brand-ink)
+   passerait en clair) ; texte forcé clair. Le décor montagnes (SVG, couleurs
+   fixes) est inchangé. ===== */
+[data-theme="dark"] .footer {
+  background: #1d1d1b;
+  color: #ededed;
+}
+[data-theme="dark"] .footer__list a,
+[data-theme="dark"] .footer__col a {
+  color: #ededed;
+}
+[data-theme="dark"] .footer__list a:hover,
+[data-theme="dark"] .footer__col a:hover {
+  color: var(--color-brand-yellow);
+}
 </style>

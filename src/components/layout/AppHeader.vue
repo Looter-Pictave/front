@@ -5,6 +5,7 @@ import { RouterLink, useRouter, useRoute } from 'vue-router'
 
 import BrandLogo from '@/components/base/BrandLogo.vue'
 import BaseChip from '@/components/base/BaseChip.vue'
+import ThemeToggle from '@/components/base/ThemeToggle.vue'
 import { useCartStore } from '@/stores/cart'
 import { useUiStore } from '@/stores/ui'
 import { useAuthStore } from '@/stores/auth'
@@ -115,6 +116,8 @@ async function handleLogout() {
       </nav>
 
       <div class="header__actions">
+        <ThemeToggle />
+
         <!-- Bouton Connexion si non authentifié -->
         <RouterLink
           v-if="!isAuthenticated"
@@ -522,5 +525,58 @@ async function handleLogout() {
   height: 1px;
   background: var(--color-line);
   margin: 0.3rem 0;
+}
+
+/* ===== Patch dark mode : le header reste JAUNE (identité). On force ses
+   éléments (qui utilisent --color-brand-ink, swappé en clair en dark) à
+   rester foncés et lisibles sur le jaune. Le dropdown user s'adapte tout
+   seul (fond paper -> sombre). ===== */
+[data-theme="dark"] .header {
+  border-bottom-color: #1d1d1b;
+}
+[data-theme="dark"] .header__name,
+[data-theme="dark"] .header__tagline,
+[data-theme="dark"] .header__link {
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__link:hover,
+[data-theme="dark"] .header__link.router-link-active {
+  border-bottom-color: #1d1d1b;
+}
+[data-theme="dark"] .header__burger {
+  border-color: #1d1d1b;
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__login {
+  border-color: #1d1d1b;
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__login:hover {
+  background: #1d1d1b;
+  color: #ffdd00;
+}
+[data-theme="dark"] .header__cart {
+  background: #1d1d1b;
+  color: #fff;
+}
+[data-theme="dark"] .header__user-trigger {
+  background: #1d1d1b;
+  color: #ffdd00;
+}
+[data-theme="dark"] .header__user-avatar {
+  background: #ffdd00;
+  color: #1d1d1b;
+}
+[data-theme="dark"] .header__mobile {
+  border-top-color: #1d1d1b;
+}
+[data-theme="dark"] .header__mobile-link {
+  color: #1d1d1b;
+  border-bottom-color: rgb(0 0 0 / 0.12);
+}
+[data-theme="dark"] .header__mobile-link:active,
+[data-theme="dark"] .header__mobile-link.router-link-active {
+  background: #1d1d1b;
+  color: #ffdd00;
 }
 </style>
