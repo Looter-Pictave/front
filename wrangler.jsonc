@@ -1,6 +1,6 @@
 {
   // Nom du projet sur Cloudflare (minuscules + tirets uniquement).
-  "name": "looter-pictave",
+  "name": "gites",
   // Date de compatibilité du runtime Workers (obligatoire).
   "compatibility_date": "2026-05-29",
   // Déploiement "static assets" : aucun script Worker, on sert juste le
