@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
 
@@ -11,6 +12,10 @@ import { useCatalogStore } from '@/stores/catalog'
 
 const catalog = useCatalogStore()
 const { featured, categories } = storeToRefs(catalog)
+onMounted(() => {
+  catalog.loadReferences()
+  if (!catalog.products.length) catalog.loadProducts({ size: 4 })
+})
 </script>
 
 <template>

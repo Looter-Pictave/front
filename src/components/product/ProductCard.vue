@@ -10,26 +10,24 @@ const props = defineProps({
 })
 
 const primaryImage = computed(
-  () => props.product.images.find((i) => i.isPrimary) ?? props.product.images[0],
+  () => props.product.images?.find((i) => i.primary) ?? props.product.images?.[0] ?? null,
 )
 </script>
 
 <template>
   <RouterLink :to="`/produit/${product.slug}`" class="card panel">
     <div class="card__media">
-      <img :src="primaryImage.url" :alt="primaryImage.alt" loading="lazy" />
+      <img v-if="primaryImage" :src="primaryImage.url" :alt="primaryImage.alt || product.name" loading="lazy" />
+      <div v-else class="card__placeholder">Image indisponible</div>
       <div class="card__overlay">
         <ProductBadges :product="product" />
       </div>
     </div>
     <div class="card__body">
-      <p class="card__franchise">{{ product.franchise }}</p>
+      <p class="card__franchise">{{ product.brand?.name ?? 'Marque non renseignée' }} · {{ product.franchise?.name ?? 'Sans franchise' }}</p>
       <h3 class="card__name">{{ product.name }}</h3>
-      <ProductPrice
-        :price="product.price"
-        :compare-at-price="product.compareAtPrice"
-        size="sm"
-      />
+      <ProductPrice :regular-price="product.regularPrice" :promo-price="product.promoPrice" :currency="product.currency" size="sm" />
+      <p class="card__stock">{{ product.stock > 0 ? `${product.stock} en stock` : 'Rupture de stock' }}</p>
     </div>
   </RouterLink>
 </template>
@@ -60,6 +58,7 @@ const primaryImage = computed(
   object-fit: cover;
   display: block;
 }
+.card__placeholder { width:100%;height:100%;display:grid;place-items:center;padding:1rem;text-align:center;color:var(--color-ink-muted);font-weight:700 }
 .card__overlay {
   position: absolute;
   top: 0.6rem;
@@ -96,4 +95,5 @@ const primaryImage = computed(
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.card__stock { margin:0; font-size:.75rem; color:var(--color-ink-muted); font-weight:600 }
 </style>

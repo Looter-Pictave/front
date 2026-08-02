@@ -27,5 +27,12 @@ export default defineConfig({
     //    quand tu as fini, et préfère `npm run build` + `npm run preview`
     //    (ou un tunnel type cloudflared/ngrok) pour une démo publique durable.
     allowedHosts: true,
+    proxy: {
+      '/api-proxy': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-proxy/, ''),
+      },
+    },
   },
 });

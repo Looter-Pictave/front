@@ -48,8 +48,8 @@ export const useCartStore = defineStore('cart', () => {
       sku: product.sku,
       slug: product.slug,
       name: product.name,
-      price: product.price,
-      image: product.images?.[0]?.url ?? null,
+      price: { amount: Math.round((product.promoPrice ?? product.regularPrice) * 100), currency: product.currency ?? 'EUR' },
+      image: product.images?.find((image) => image.primary)?.url ?? product.images?.[0]?.url ?? null,
       quantity,
     })
   }

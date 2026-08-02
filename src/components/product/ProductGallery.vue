@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 
 const props = defineProps({
   images: { type: Array, required: true },
+  productName: { type: String, default: 'Produit' },
 })
 
 const activeIndex = ref(0)
@@ -12,7 +13,8 @@ const activeImage = computed(() => props.images[activeIndex.value])
 <template>
   <div class="gallery">
     <div class="gallery__main">
-      <img :src="activeImage.url" :alt="activeImage.alt" />
+      <img v-if="activeImage" :src="activeImage.url" :alt="activeImage.alt || productName" />
+      <div v-else class="gallery__placeholder">Image indisponible</div>
     </div>
     <div v-if="images.length > 1" class="gallery__thumbs">
       <button
@@ -49,6 +51,7 @@ const activeImage = computed(() => props.images[activeIndex.value])
   object-fit: cover;
   display: block;
 }
+.gallery__placeholder { width:100%;height:100%;display:grid;place-items:center;color:var(--color-ink-muted);font-weight:700 }
 .gallery__thumbs {
   display: flex;
   gap: 0.5rem;

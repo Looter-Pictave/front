@@ -1,29 +1,11 @@
 <script setup>
 import { computed } from 'vue'
 import BaseChip from '@/components/base/BaseChip.vue'
-
-const props = defineProps({
-  stock: { type: Object, required: true },
-})
-
+const props = defineProps({ stock: { type: Number, required: true } })
 const config = computed(() => {
-  switch (props.stock.status) {
-    case 'in_stock':
-      return { variant: 'success', label: 'En stock' }
-    case 'low_stock':
-      return { variant: 'warning', label: `Plus que ${props.stock.quantity}` }
-    case 'out_of_stock':
-      return { variant: 'danger', label: 'Rupture' }
-    case 'preorder':
-      return { variant: 'ink', label: 'Précommande' }
-    case 'discontinued':
-      return { variant: 'outline', label: 'Discontinué' }
-    default:
-      return { variant: 'outline', label: '—' }
-  }
+  if (props.stock <= 0) return { variant: 'danger', label: 'Rupture' }
+  if (props.stock <= 3) return { variant: 'warning', label: `Plus que ${props.stock}` }
+  return { variant: 'success', label: `${props.stock} en stock` }
 })
 </script>
-
-<template>
-  <BaseChip :variant="config.variant" size="sm">{{ config.label }}</BaseChip>
-</template>
+<template><BaseChip :variant="config.variant" size="sm">{{ config.label }}</BaseChip></template>
